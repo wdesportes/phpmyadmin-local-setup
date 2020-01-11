@@ -202,6 +202,7 @@ services:
     domainname: williamdes.local
     restart: on-failure:2
     mem_limit: 300m
+    working_dir: /mnt/Dev
     volumes:
       - "/mnt/Dev:/mnt/Dev"
       - "/var/log/containers:/var/log"
@@ -220,6 +221,7 @@ services:
     domainname: williamdes.local
     restart: on-failure:2
     mem_limit: 300m
+    working_dir: /mnt/Dev
     volumes:
       - "/mnt/Dev:/mnt/Dev"
       - "/var/log/containers:/var/log"
@@ -238,6 +240,7 @@ services:
     domainname: williamdes.local
     restart: on-failure:0
     mem_limit: 600m
+    working_dir: /mnt/Dev
     volumes:
       - "/mnt/Dev:/mnt/Dev"
       - "/var/log/containers:/var/log"
@@ -256,6 +259,7 @@ services:
     domainname: williamdes.local
     restart: on-failure:1
     mem_limit: 600m
+    working_dir: /mnt/Dev
     volumes:
       - "/mnt/Dev:/mnt/Dev"
       - "/var/log/containers:/var/log"
@@ -274,6 +278,7 @@ services:
     domainname: williamdes.local
     restart: on-failure:2
     mem_limit: 600m
+    working_dir: /mnt/Dev
     volumes:
       - "/mnt/Dev:/mnt/Dev"
       - "/var/log/containers:/var/log"
@@ -292,6 +297,7 @@ services:
     domainname: williamdes.local
     restart: on-failure:2
     mem_limit: 600m
+    working_dir: /mnt/Dev
     volumes:
       - "/mnt/Dev:/mnt/Dev"
       - "/var/log/containers:/var/log"
@@ -310,6 +316,7 @@ services:
     domainname: williamdes.local
     restart: on-failure:2
     mem_limit: 600m
+    working_dir: /mnt/Dev
     volumes:
       - "/mnt/Dev:/mnt/Dev"
       - "/var/log/containers:/var/log"
@@ -328,6 +335,7 @@ services:
     domainname: williamdes.local
     restart: on-failure:2
     mem_limit: 300m
+    working_dir: /mnt/Dev
     volumes:
       - "/mnt/Dev:/mnt/Dev"
       - "/var/log/containers:/var/log"
