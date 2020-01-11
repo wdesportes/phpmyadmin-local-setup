@@ -1,0 +1,27 @@
+server {
+    set $serverName "7.4.local";
+    set $version "7.4";
+	set $socket "7.4.williamdes.local:9000";
+    set $folder "/mnt/Dev/";
+	listen	   443 ssl http2;
+	listen	   80;
+	access_log /var/log/nginx/access_localhost.7.4.log;
+	error_log /var/log/nginx/error_localhost.7.4.log error;
+	server_name 7.4.local;
+	index index.php index.html;
+	root	$folder;
+	server_tokens off;
+	ssl_certificate      /etc/nginx/nginx-selfsigned.crt;
+	ssl_certificate_key  /etc/nginx/nginx-selfsigned.key;
+	location /robots.txt {
+		return 200 "User-agent: *\nDisallow: /";
+	}
+	location / {
+		index index.php;
+		try_files $uri $uri/ =404;
+	}
+	location ~ \.php$ {
+		include snippets/fastcgi-php.conf;
+		fastcgi_pass $socket;
+	}
+}

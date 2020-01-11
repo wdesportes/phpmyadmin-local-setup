@@ -1,0 +1,46 @@
+version: "3.7"
+
+networks:
+  mynet:
+
+volumes:
+  mariadb_data:
+  phpmyadmin_data:
+
+services:
+
+  mariadb:
+    image: mariadb:10.4.8-bionic
+    environment:
+      MYSQL_DATABASE: mydb
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password
+    volumes:
+      - mariadb_data:/var/lib/mysql/
+    networks:
+      - mynet
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:fpm-alpine
+    environment:
+      PMA_HOST: mariadb
+    volumes:
+      - phpmyadmin_data:/var/www/html/
+    networks:
+      - mynet
+    depends_on:
+      - mariadb
+
+  nginx:
+    image: nginx:1.17.4-alpine
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf:ro
+      - phpmyadmin_data:/var/www/html/:ro
+    ports:
+      - "90:80"
+    networks:
+      - mynet
+    depends_on:
+      - mariadb
+      - phpmyadmin

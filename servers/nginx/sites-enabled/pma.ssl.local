@@ -1,0 +1,222 @@
+map $scheme $server_https {
+        default off;
+        https on;
+}
+
+
+# https SSL SPDY phpmyadmin
+server {
+    listen                          80;
+	listen                          443 ssl http2;
+	server_name                     pma.ssl.local;
+	root                            /mnt/Dev;
+
+	keepalive_timeout               3000;
+
+	client_body_buffer_size         256k;
+	client_body_timeout             3000s;
+	client_header_buffer_size       256k;
+	##                              how long a connection has to complete sending
+	##                              it's headers for request to be processed
+	client_header_timeout           60s;
+	client_max_body_size            512m;
+	connection_pool_size            512;
+	directio                        512m;
+	ignore_invalid_headers          on;
+	large_client_header_buffers     8 256k;
+
+	#ssl_certificate                 /usr/local/nginx/conf/ssl/41d3fd4d9795.crt;
+	#ssl_certificate_key             /usr/local/nginx/conf/ssl/41d3fd4d9795.key;
+	ssl_protocols                   TLSv1 TLSv1.1 TLSv1.2;
+	ssl_session_cache               shared:SSL:10m;
+	ssl_session_timeout             10m;
+	#                               mozilla recommended
+	ssl_ciphers                     EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+ECDSA+AESGCM:EECDH+aRSA+AESGCM:EECDH+ECDSA+SHA256:EECDH+ECDSA+SHA384:EECDH+aRSA+SHA256:EECDH+aRSA+SHA384:EECDH+AES128:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA:!CAMELLIA;
+	ssl_prefer_server_ciphers       on;
+	#add_header                     Alternate-Protocol 443:npn-spdy/3;
+	#add_header                     Strict-Transport-Security "max-age=0; includeSubdomains;";
+	add_header                      X-Frame-Options SAMEORIGIN;
+	#spdy_headers_comp              5;
+	ssl_buffer_size                 1400;
+	ssl_session_tickets             on;
+
+	#                               limit_conn limit_per_ip 16;
+	#                               ssi on;
+
+	access_log                      /var/log/nginx/localhost_ssl.access.log;
+	error_log                       /var/log/nginx/localhost_ssl.error.log error;
+
+	#                               ngx_pagespeed & ngx_pagespeed handler
+	#include                        /usr/local/nginx/conf/pagespeed.conf;
+	#include                        /usr/local/nginx/conf/pagespeedhandler.conf;
+	#include                        /usr/local/nginx/conf/pagespeedstatslog.conf;
+
+	#location / {
+	#	return                         302 https://$server_name$request_uri;
+	#}
+#location ^~ /phpmyadmintest/ {
+#        rewrite ^/(.*) https://41d3fd4d9795/$1 permanent;
+#}
+
+	##include                       /usr/local/nginx/conf/phpmyadmin_https.conf;
+	location ^~ /phpmyadmintest/ {
+		#try_files                     $uri $uri/ /phpmyadmintest/index.php?$args;
+		##include                      /usr/local/nginx/conf/php_phpmyadmintest.conf;
+		location ~ [^/]\.php(/|$) {
+			fastcgi_split_path_info       ^(.+?\.php)(/.*)$;
+			if (!-f $document_root$fastcgi_script_name) {
+				return                       404;
+			}
+			fastcgi_pass                  unix:/var/run/php/php7.2-fpm.sock;
+			#fastcgi_pass                 unix:/tmp/php5-fpm.sock;
+			fastcgi_index                 index.php;
+			fastcgi_param                 SCRIPT_FILENAME $document_root$fastcgi_script_name;
+			#fastcgi_param                SCRIPT_FILENAME $request_filename;
+			#fastcgi_param                PHP_ADMIN_VALUE open_basedir=$document_root/:/usr/local/lib/php/:/tmp/;
+
+			#                             might shave 200+ ms off PHP requests
+			#                             which don't pass on a content length header
+			#                             slightly faster page response time at the
+			#                             expense of throughput / scalability
+			#sendfile                     on;
+			#tcp_nopush                   off;
+			#keepalive_requests           0;
+
+			fastcgi_connect_timeout       3000;
+			fastcgi_send_timeout          3000;
+			fastcgi_read_timeout          3000;
+			fastcgi_buffer_size           512k;
+			fastcgi_buffers               512 16k;
+			fastcgi_busy_buffers_size     1m;
+			fastcgi_temp_file_write_size  4m;
+			fastcgi_max_temp_file_size    4m;
+			fastcgi_intercept_errors      on;
+
+			#                             next 3 lines when uncommented / enabled
+			#                             allow Nginx to handle uploads which then
+			#                             passes back the completed upload to PHP
+			#fastcgi_pass_request_body    off;
+			#client_body_in_file_only     clean;
+			#fastcgi_param                REQUEST_BODY_FILE $request_body_file;
+
+			#new                          .04+ map method
+			fastcgi_param                 HTTPS $server_https;
+
+			#                             comment out PATH_TRANSLATED line if /usr/local/lib/php.ini sets following:
+			#                             cgi.fix_pathinfo=0
+			#                             as of centminmod v1.2.3-eva2000.01 default is set to cgi.fix_pathinfo=1
+
+			fastcgi_param                 PATH_INFO $fastcgi_path_info;
+			fastcgi_param                 PATH_TRANSLATED $document_root$fastcgi_path_info;
+
+			fastcgi_param                 QUERY_STRING $query_string;
+			fastcgi_param                 REQUEST_METHOD $request_method;
+			fastcgi_param                 CONTENT_TYPE $content_type;
+			fastcgi_param                 CONTENT_LENGTH $content_length;
+
+			fastcgi_param                 SCRIPT_NAME $fastcgi_script_name;
+			fastcgi_param                 REQUEST_URI $request_uri;
+			fastcgi_param                 DOCUMENT_URI $document_uri;
+			fastcgi_param                 DOCUMENT_ROOT $document_root;
+			fastcgi_param                 SERVER_PROTOCOL $server_protocol;
+			fastcgi_param                 REQUEST_SCHEME $scheme;
+			fastcgi_param                 HTTPS $https if_not_empty;
+			fastcgi_param                 HTTP_PROXY "";
+
+			fastcgi_param                 GATEWAY_INTERFACE CGI/1.1;
+			fastcgi_param                 SERVER_SOFTWARE nginx/$nginx_version;
+
+			fastcgi_param                 REMOTE_ADDR $remote_addr;
+			fastcgi_param                 REMOTE_PORT $remote_port;
+			fastcgi_param                 SERVER_ADDR $server_addr;
+			fastcgi_param                 SERVER_PORT $server_port;
+			fastcgi_param                 SERVER_NAME $server_name;
+
+			#                             Set php-fpm geoip variables
+			#fastcgi_param                 GEOIP_COUNTRY_CODE $geoip_country_code;
+			#fastcgi_param                 GEOIP_COUNTRY_CODE3 $geoip_country_code3;
+			#fastcgi_param                 GEOIP_COUNTRY_NAME $geoip_country_name;
+			#fastcgi_param                 GEOIP_CITY_COUNTRY_CODE $geoip_city_country_code;
+			#fastcgi_param                 GEOIP_CITY_COUNTRY_CODE3 $geoip_city_country_code3;
+			#fastcgi_param                 GEOIP_CITY_COUNTRY_NAME $geoip_city_country_name;
+			#fastcgi_param                 GEOIP_REGION $geoip_region;
+			#fastcgi_param                 GEOIP_CITY $geoip_city;
+			#fastcgi_param                 GEOIP_POSTAL_CODE $geoip_postal_code;
+			#fastcgi_param                 GEOIP_CITY_CONTINENT_CODE $geoip_city_continent_code;
+			#fastcgi_param                 GEOIP_LATITUDE $geoip_latitude;
+			#fastcgi_param                 GEOIP_LONGITUDE $geoip_longitude;
+
+			#                             PHP only, required if PHP was built with --enable-force-cgi-redirect
+			fastcgi_param                 REDIRECT_STATUS 200;
+
+		}
+
+
+		#allow                         ;
+		#deny                          all;
+	}
+
+	##include                       /usr/local/nginx/conf/staticfiles.conf;
+
+	location ~* \.(3gp|gif|jpg|jpeg|png|ico|wmv|avi|asf|asx|mpg|mpeg|mp4|pls|mp3|mid|wav|swf|flv|exe|zip|tar|rar|gz|tgz|bz2|uha|7z|doc|docx|xls|xlsx|pdf|iso)$ {
+		gzip_static                    off;
+		#add_header                    Pragma public;
+		add_header                     Cache-Control "public, must-revalidate, proxy-revalidate";
+		access_log                     off;
+		expires                        30d;
+		break;
+	}
+
+	location ~* \.(js)$ {
+		#add_header                    Pragma public;
+		add_header                     Cache-Control "public, must-revalidate, proxy-revalidate";
+		access_log                     off;
+		expires                        30d;
+		break;
+	}
+
+	location ~* \.(css)$ {
+		#add_header                    Pragma public;
+		add_header                     Cache-Control "public, must-revalidate, proxy-revalidate";
+		access_log                     off;
+		expires                        30d;
+		break;
+	}
+
+	location ~* \.(html|htm|txt)$ {
+		#add_header                    Pragma public;
+		add_header                     Cache-Control "public, must-revalidate, proxy-revalidate";
+		access_log                     off;
+		expires                        1d;
+		break;
+	}
+
+	location ~* \.(eot|svg|ttf|woff|woff2)$ {
+		#add_header                    Pragma public;
+		add_header                     Cache-Control "public, must-revalidate, proxy-revalidate";
+		access_log                     off;
+		expires                        30d;
+		break;
+	}
+	#include                        /usr/local/nginx/conf/php.conf;
+	##include                       /usr/local/nginx/conf/drop.conf;
+	location = /robots.txt {
+		access_log                     off; log_not_found off;
+	}
+	location = /favicon.ico {
+		access_log                     off; log_not_found off; expires 30d;
+	}
+	location ~ /\. {
+		access_log                     off; log_not_found off; deny all;
+	}
+	location ~ ~$ {
+		access_log                     off; log_not_found off; deny all;
+	}
+	location ~ /\.git {
+		access_log                     off; log_not_found off; deny all;
+	}
+	#                               for security see https://community.centminmod.com/posts/17234/
+location ~* \.(bak|php~|php#|php.save|php.swp|php.swo)$ { return 444; }
+
+### include /usr/local/nginx/conf/errorpage.conf;
+}
