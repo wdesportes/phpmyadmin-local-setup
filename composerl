@@ -1,0 +1,13 @@
+#!/bin/bash
+docker run --name composer_local composer /bin/true
+docker cp composer_local:/usr/bin/composer composer
+docker rm composer_local
+docker cp ./composer phpfpm55:/bin/composer
+docker cp ./composer phpfpm70:/bin/composer
+docker cp ./composer phpfpm71:/bin/composer
+docker cp ./composer phpfpm72:/bin/composer
+docker cp ./composer phpfpm73:/bin/composer
+docker cp ./composer phpfpm74:/bin/composer
+docker cp ./composer phpfpm80:/bin/composer
+
+echo "Done"
