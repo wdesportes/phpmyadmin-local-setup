@@ -10,4 +10,6 @@ docker cp ./composer phpfpm73:/bin/composer
 docker cp ./composer phpfpm74:/bin/composer
 docker cp ./composer phpfpm80:/bin/composer
 
+rm -f ./composer
+
 echo "Done"
