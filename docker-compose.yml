@@ -130,6 +130,7 @@ services:
           - proxy1.local
           - proxy2.local
           - 8.0.local
+          - pma.selenium.local
     ports:
       - "80:80"
       - "443:443"
