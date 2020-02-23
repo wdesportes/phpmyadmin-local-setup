@@ -1,0 +1,39 @@
+version: "3.1"
+
+services:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5.0.1
+    container_name: pma-example
+    restart: unless-stopped
+    depends_on:
+      - sql1
+      - sql2
+    environment:
+      PMA_HOSTS: pma-example-sql1,pma-example-sql2
+      PMA_CONTROLHOST: pma-example-sql1
+      PMA_CONTROLUSER: pma
+      PMA_CONTROLPASS: pmapassword
+    networks:
+      - net
+    ports:
+      - 9191:80
+  sql1:
+    image: mariadb:10.4
+    container_name: pma-example-sql1
+    environment:
+      - MYSQL_ROOT_PASSWORD=insecurerootpassword
+      - MYSQL_DATABASE=phpmyadmin
+      - MYSQL_USER=pma
+      - MYSQL_PASSWORD=pmapassword
+    networks:
+      - net
+  sql2:
+    image: mariadb:10.4
+    container_name: pma-example-sql2
+    environment:
+      - MYSQL_ROOT_PASSWORD=insecurerootpassword
+    networks:
+      - net
+networks:
+  net:
+    driver: bridge
