@@ -156,7 +156,7 @@ services:
       - "4430:443"
 
   pmatest:
-    image: apache-test:latest
+    image: phpmyadmin/phpmyadmin:latest
     container_name: pmatest
     dns_search: williamdes.local
     hostname: pmatest.williamdes.local
@@ -392,7 +392,7 @@ services:
     image: "mysql:8.0"
     container_name: mysql80
     dns_search: williamdes.local
-    hostname: mysql8.0.williamdes.local
+    hostname: mysql80.williamdes.local
     domainname: williamdes.local
     restart: on-failure:2
     mem_limit: 500m
@@ -406,14 +406,14 @@ services:
     networks:
       williamdeslocal:
         aliases:
-          - mysql8.0.williamdes.local
-          - mysql8.0.local
+          - mysql80.williamdes.local
+          - mysql80.local
 
   mysql800:
     image: "mysql:8.0"
     container_name: mysql800
     dns_search: williamdes.local
-    hostname: mysql8.00.williamdes.local
+    hostname: mysql800.williamdes.local
     domainname: williamdes.local
     restart: on-failure:2
     mem_limit: 500m
@@ -427,8 +427,8 @@ services:
     networks:
       williamdeslocal:
         aliases:
-          - mysql8.0.williamdes.local
-          - mysql8.0.local
+          - mysql800.williamdes.local
+          - mysql800.local
 
   mysql-master:
     image: "bitnami/mysql:8.0"
