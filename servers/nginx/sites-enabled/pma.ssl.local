@@ -67,7 +67,7 @@ server {
 			if (!-f $document_root$fastcgi_script_name) {
 				return                       404;
 			}
-			fastcgi_pass                  unix:/var/run/php/php7.2-fpm.sock;
+			fastcgi_pass                  "7.2.williamdes.local:9000";
 			#fastcgi_pass                 unix:/tmp/php5-fpm.sock;
 			fastcgi_index                 index.php;
 			fastcgi_param                 SCRIPT_FILENAME $document_root$fastcgi_script_name;

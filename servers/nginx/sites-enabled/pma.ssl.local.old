@@ -21,7 +21,7 @@ server {
     }
 
     location ~ ^/111111111111/(.*\.php)$ {
-        fastcgi_pass        unix:/var/run/php/php7.2-fpm.sock;
+        fastcgi_pass        "7.2.williamdes.local:9000";
         include         fastcgi_params;
         fastcgi_param  QUERY_STRING $query_string;
         fastcgi_param  SCRIPT_FILENAME /mnt/Dev/phpmyadmintest/$1;
