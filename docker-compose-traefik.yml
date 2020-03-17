@@ -1,0 +1,68 @@
+version: "3"
+services:
+  traefik:
+    image: "traefik:v2.1"
+    networks:
+      - traefik_reverseproxy_net
+    container_name: "traefik"
+    command:
+      - "--log.level=DEBUG"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.address=:443"
+      - "--entryPoints.backend.address=:521"
+      - "--providers.docker=true"
+      - "--providers.docker.endpoint=unix:///var/run/docker.sock"
+      - "--certificatesResolvers.letsencrypt.acme.email=your@email.com"
+      - "--certificatesResolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesResolvers.letsencrypt.acme.tlsChallenge=true"
+      - "--certificatesResolvers.letsencrypt.acme.keyType=RSA4096"
+    ports:
+      - "8082:80"
+      - "4433:443"
+      - "521:521"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "/traefik/letsencrypt:/letsencrypt"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5
+    networks:
+      - traefik_reverseproxy_net
+    environment:
+      PMA_HOST: db-pma.traefik.local
+      PMA_ABSOLUTE_URI: https://pma.traefik.local:521/
+    logging:
+      driver: json-file
+    labels:
+      traefik.http.routers.phpmyadminssl.tls: "true"
+      traefik.http.routers.phpmyadminssl.rule: Host(`pma.traefik.local`)
+      traefik.http.routers.phpmyadminssl.tls.certresolver: letsencrypt
+      #traefik.http.routers.phpmyadminssl.tls.options: secure-tls@file
+      #traefik.http.routers.phpmyadminssl.entrypoints: backend
+      phpmyadmin.service.deployment.autoredeploy: "true"
+      traefik.http.services.phpmyadminlb.loadbalancer.passhostheader: "true"
+      traefik.docker.network: traefik_reverseproxy_net
+      traefik.enable: "true"
+      traefik.http.services.phpmyadminlb.loadbalancer.server.scheme: http
+      traefik.http.services.phpmyadminlb.loadBalancer.server.port: "80"
+
+  mysql5717:
+    image: mysql:5.7.17
+    container_name: db-pma.traefik.local
+    dns_search: db-pma.traefik.local
+    hostname: db-pma.traefik.local
+    domainname: db-pma.traefik.local
+    restart: on-failure:2
+    networks:
+      - traefik_reverseproxy_net
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=public
+      - MYSQL_USER=public
+      - MYSQL_PASSWORD=public
+
+networks:
+  traefik_reverseproxy_net:
+    driver: bridge
