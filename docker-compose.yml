@@ -209,6 +209,7 @@ services:
     volumes:
       - "/mnt/Dev:/mnt/Dev"
       - "/var/log/containers:/var/log"
+      - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
     networks:
       williamdeslocal:
         aliases:
@@ -228,6 +229,7 @@ services:
     volumes:
       - "/mnt/Dev:/mnt/Dev"
       - "/var/log/containers:/var/log"
+      - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
     networks:
       williamdeslocal:
         aliases:
@@ -247,6 +249,7 @@ services:
     volumes:
       - "/mnt/Dev:/mnt/Dev"
       - "/var/log/containers:/var/log"
+      - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
     networks:
       williamdeslocal:
         aliases:
@@ -266,6 +269,7 @@ services:
     volumes:
       - "/mnt/Dev:/mnt/Dev"
       - "/var/log/containers:/var/log"
+      - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
     networks:
       williamdeslocal:
         aliases:
@@ -285,6 +289,7 @@ services:
     volumes:
       - "/mnt/Dev:/mnt/Dev"
       - "/var/log/containers:/var/log"
+      - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
     networks:
       williamdeslocal:
         aliases:
@@ -304,6 +309,7 @@ services:
     volumes:
       - "/mnt/Dev:/mnt/Dev"
       - "/var/log/containers:/var/log"
+      - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
     networks:
       williamdeslocal:
         aliases:
@@ -323,6 +329,7 @@ services:
     volumes:
       - "/mnt/Dev:/mnt/Dev"
       - "/var/log/containers:/var/log"
+      - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
     networks:
       williamdeslocal:
         aliases:
@@ -342,6 +349,7 @@ services:
     volumes:
       - "/mnt/Dev:/mnt/Dev"
       - "/var/log/containers:/var/log"
+      - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
     networks:
       williamdeslocal:
         aliases:
