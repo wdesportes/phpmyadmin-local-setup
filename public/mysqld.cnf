@@ -1,6 +1,4 @@
 [mysqld]
-# ssl certificates and tls
-tls_version = TLSv1.3
 ssl-ca=/etc/db-certs/ca-cert.pem
 ssl-cert=/etc/db-certs/server-cert.pem
 ssl-key=/etc/db-certs/server-key.pem

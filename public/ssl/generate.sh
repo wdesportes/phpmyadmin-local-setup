@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Source: https://github.com/chio-nzgft/docker-MariaDB-with-SSL
+# See: https://dev.mysql.com/doc/refman/5.7/en/creating-ssl-files-using-openssl.html
 
 rm *.pem
 
@@ -25,3 +26,4 @@ openssl x509 -req -in client-req.pem -days 3600 -CA ca-cert.pem -CAkey ca-key.pe
 echo "check key ok"
 
 openssl verify -CAfile ca-cert.pem server-cert.pem client-cert.pem
+chmod 777 *.pem
