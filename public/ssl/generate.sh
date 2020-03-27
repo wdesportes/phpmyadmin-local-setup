@@ -7,7 +7,7 @@ rm *.pem
 
 SUBJECT_CA="/C=FR/O=Williamdes/OU=Docker/CN=ssl.williamdes.local/emailAddress=williamdes@wdes.fr"
 SUBJECT_CLIENT="/C=FR/O=Williamdes/OU=Docker/CN=client.williamdes.local/emailAddress=williamdes@wdes.fr"
-SUBJECT_SERVER="/C=FR/O=Williamdes/OU=Docker/CN=server.williamdes.local/emailAddress=williamdes@wdes.fr"
+SUBJECT_SERVER="/C=FR/O=Williamdes/OU=Docker/CN=mariadb104.williamdes.local/CN=server.williamdes.local/emailAddress=williamdes@wdes.fr"
 
 echo "CA key"
 
