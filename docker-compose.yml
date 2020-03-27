@@ -20,6 +20,8 @@ services:
     volumes:
       - "/mnt/Dev/!OSS/servers/mariadb-server:/var/lib/mysql"
       - "/var/log/containers:/var/log"
+      - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
+      - "/mnt/Dev/!OSS/public/mysqld.cnf:/etc/mysql/mariadb.conf.d/ssl.cnf"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
