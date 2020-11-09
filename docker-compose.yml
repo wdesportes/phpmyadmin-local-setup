@@ -162,25 +162,25 @@ services:
       - "443:443"
       - "8443:8443"
 
-  varnish:
-    image: "varnish:latest"
-    container_name: varnish
-    dns_search: williamdes.local
-    hostname: varnish.williamdes.local
-    domainname: williamdes.local
-    restart: on-failure:2
-    mem_limit: 100m
-    tmpfs:
-      - /var/lib/varnish:exec
-    volumes:
-      - "/mnt/Dev/!OSS/servers/varnish/:/etc/varnish"
-    networks:
-      williamdeslocal:
-        aliases:
-          - varnish.williamdes.local
-    ports:
-      - "800:80"
-      - "4430:443"
+  #  varnish:
+  #    image: "varnish:latest"
+  #    container_name: varnish
+  #    dns_search: williamdes.local
+  #    hostname: varnish.williamdes.local
+  #    domainname: williamdes.local
+  #    restart: on-failure:2
+  #    mem_limit: 100m
+  #    tmpfs:
+  #      - /var/lib/varnish:exec
+  #    volumes:
+  #      - "/mnt/Dev/!OSS/servers/varnish/:/etc/varnish"
+  #    networks:
+  #      williamdeslocal:
+  #        aliases:
+  #          - varnish.williamdes.local
+  #    ports:
+  #      - "800:80"
+  #      - "4430:443"
 
   pmatest:
     image: phpmyadmin/phpmyadmin:latest
@@ -220,6 +220,26 @@ services:
     ports:
       - "900:80"
       - "4431:443"
+
+  #  haproxy:
+  #    image: "haproxy:latest"
+  #    container_name: haproxy
+  #    dns_search: williamdes.local
+  #    hostname: haproxy.williamdes.local
+  #    domainname: williamdes.local
+  #    restart: on-failure:2
+  #    mem_limit: 100m
+  #    tmpfs:
+  #      - /var/lib/haproxy:exec
+  #    volumes:
+  #      - "/mnt/Dev/!OSS/servers/haproxy/:/usr/local/etc/haproxy"
+  #    networks:
+  #      williamdeslocal:
+  #        aliases:
+  #          - haproxy.williamdes.local
+  #    ports:
+  #      - "900:80"
+  #      - "4431:443"
 
   phpfpm53:
     image: devilbox/php-fpm-5.3:latest
