@@ -19,7 +19,7 @@ services:
           - mariadb104.williamdes.local
     volumes:
       - "/mnt/Dev/!OSS/servers/mariadb-server:/var/lib/mysql"
-      - "/var/log/containers:/var/log"
+      - "./servers/php-custom.d:/etc/php-custom.d"
       - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
       - "/mnt/Dev/!OSS/public/mysqld.cnf:/etc/mysql/mariadb.conf.d/ssl.cnf"
     environment:
@@ -91,7 +91,7 @@ services:
           - mysql5726.williamdes.local
     volumes:
       - "/mnt/Dev/!OSS/servers/mysql-server:/var/lib/mysql"
-      - "/var/log/containers:/var/log"
+      - "./servers/php-custom.d:/etc/php-custom.d"
     ports:
       - "4406:3306"
 
@@ -108,7 +108,7 @@ services:
           - mysql5717.williamdes.local
     volumes:
       - "/mnt/Dev/!OSS/servers/mysql-5726-server:/var/lib/mysql"
-      - "/var/log/containers:/var/log"
+      - "./servers/php-custom.d:/etc/php-custom.d"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
@@ -130,7 +130,7 @@ services:
           - mysql578.williamdes.local
     volumes:
       - "/mnt/Dev/!OSS/servers/mysql-578-server:/var/lib/mysql"
-      - "/var/log/containers:/var/log"
+      - "./servers/php-custom.d:/etc/php-custom.d"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
@@ -147,6 +147,7 @@ services:
     mem_limit: 100m
     volumes:
       - "/mnt/Dev/!OSS/servers/nginx/:/etc/nginx"
+      - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
       - "/var/log/containers/nginx:/var/log/nginx"
     networks:
@@ -251,8 +252,9 @@ services:
     mem_limit: 300m
     working_dir: /mnt/Dev
     volumes:
+      - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
-      - "/var/log/containers:/var/log"
+      - "./servers/php-custom.d:/etc/php-custom.d"
       - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
     networks:
       williamdeslocal:
@@ -268,11 +270,12 @@ services:
     hostname: 5.5.williamdes.local
     domainname: williamdes.local
     restart: on-failure:2
-    mem_limit: 300m
+    mem_limit: 1g
     working_dir: /mnt/Dev
     volumes:
+      - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
-      - "/var/log/containers:/var/log"
+      - "./servers/php-custom.d:/etc/php-custom.d"
       - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
     networks:
       williamdeslocal:
@@ -291,8 +294,9 @@ services:
     mem_limit: 600m
     working_dir: /mnt/Dev
     volumes:
+      - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
-      - "/var/log/containers:/var/log"
+      - "./servers/php-custom.d:/etc/php-custom.d"
       - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
     networks:
       williamdeslocal:
@@ -311,8 +315,9 @@ services:
     mem_limit: 600m
     working_dir: /mnt/Dev
     volumes:
+      - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
-      - "/var/log/containers:/var/log"
+      - "./servers/php-custom.d:/etc/php-custom.d"
       - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
     networks:
       williamdeslocal:
@@ -331,8 +336,9 @@ services:
     mem_limit: 600m
     working_dir: /mnt/Dev
     volumes:
+      - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
-      - "/var/log/containers:/var/log"
+      - "./servers/php-custom.d:/etc/php-custom.d"
       - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
     networks:
       williamdeslocal:
@@ -351,8 +357,9 @@ services:
     mem_limit: 600m
     working_dir: /mnt/Dev
     volumes:
+      - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
-      - "/var/log/containers:/var/log"
+      - "./servers/php-custom.d:/etc/php-custom.d"
       - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
     networks:
       williamdeslocal:
@@ -371,8 +378,9 @@ services:
     mem_limit: 600m
     working_dir: /mnt/Dev
     volumes:
+      - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
-      - "/var/log/containers:/var/log"
+      - "./servers/php-custom.d:/etc/php-custom.d"
       - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
     networks:
       williamdeslocal:
@@ -391,8 +399,9 @@ services:
     mem_limit: 300m
     working_dir: /mnt/Dev
     volumes:
+      - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
-      - "/var/log/containers:/var/log"
+      - "./servers/php-custom.d:/etc/php-custom.d"
       - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
     networks:
       williamdeslocal:
@@ -415,7 +424,7 @@ services:
   #- MYSQL_USER=public
   #- MYSQL_PASSWORD=public
   #volumes:
-  #- "/var/log/containers:/var/log"
+  #- "./servers/php-custom.d:/etc/php-custom.d"
   #networks:
   #williamdeslocal:
   #aliases:
@@ -436,7 +445,7 @@ services:
   #- MYSQL_USER=public
   #- MYSQL_PASSWORD=public
   #volumes:
-  #- "/var/log/containers:/var/log"
+  #- "./servers/php-custom.d:/etc/php-custom.d"
   #networks:
   #williamdeslocal:
   #aliases:
@@ -456,8 +465,6 @@ services:
       - MYSQL_DATABASE=public
       - MYSQL_USER=public
       - MYSQL_PASSWORD=public
-    volumes:
-      - "/var/log/containers:/var/log"
     networks:
       williamdeslocal:
         aliases:
@@ -477,8 +484,6 @@ services:
       - MYSQL_DATABASE=public
       - MYSQL_USER=public
       - MYSQL_PASSWORD=public
-    volumes:
-      - "/var/log/containers:/var/log"
     networks:
       williamdeslocal:
         aliases:
