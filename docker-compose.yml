@@ -30,6 +30,30 @@ services:
     ports:
       - "3306:3306"
 
+  mariadb105:
+    image: mariadb:10.5
+    container_name: mariadb105
+    dns_search: williamdes.local
+    hostname: mariadb105.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
+    networks:
+      williamdeslocal:
+        aliases:
+          - mariadb105.williamdes.local
+    volumes:
+      - "/mnt/Dev/!OSS/servers/mariadb105-server:/var/lib/mysql"
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=public
+      - MYSQL_USER=public
+      - MYSQL_PASSWORD=public
+
   mariadb102:
     image: mariadb:10.2
     container_name: mariadb102
