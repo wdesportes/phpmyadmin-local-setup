@@ -491,6 +491,42 @@ services:
           - mysql800.local
 
   mysql8011:
+    image: "mysql:8.0.11"
+    container_name: mysql8011
+    dns_search: williamdes.local
+    hostname: mysql8011.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    mem_limit: 500m
+    environment:
+      - MYSQL_ROOT_PASSWORD=public
+      - MYSQL_DATABASE=public
+      - MYSQL_USER=public
+      - MYSQL_PASSWORD=public
+    networks:
+      williamdeslocal:
+        aliases:
+          - mysql8011.williamdes.local
+          - mysql8011.local
+
+  mysql803:
+    image: "mysql:8.0.3"
+    container_name: mysql803
+    dns_search: williamdes.local
+    hostname: mysql803.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    mem_limit: 500m
+    environment:
+      - MYSQL_ROOT_PASSWORD=public
+      - MYSQL_DATABASE=public
+      - MYSQL_USER=public
+      - MYSQL_PASSWORD=public
+    networks:
+      williamdeslocal:
+        aliases:
+          - mysql803.williamdes.local
+          - mysql803.local
 
   mysql-primary:
     image: "bitnami/mysql:8.0"
