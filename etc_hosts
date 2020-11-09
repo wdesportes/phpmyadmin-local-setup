@@ -4,5 +4,9 @@
 127.0.0.1 pma.7.2.local 7.2.local
 127.0.0.1 pma.7.3.local 7.3.local
 127.0.0.1 pma.7.4.local 7.4.local
-127.0.0.1 pma.7.8.local 8.0.local pma.ssl.local
-
+127.0.0.1 pma.8.0.local 8.0.local pma.ssl.local pma.selenium.local pma.traefik.local pma.sso.local
+127.0.0.1 proxy1.local proxy2.local
+127.0.0.1 mariadb104.williamdes.local
+127.0.0.1       localhost
+127.0.0.1       williamdes
+127.0.0.1 williamdes.local
