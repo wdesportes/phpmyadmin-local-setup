@@ -249,7 +249,7 @@ services:
     hostname: 5.3.williamdes.local
     domainname: williamdes.local
     restart: on-failure:2
-    mem_limit: 300m
+    mem_limit: 1g
     working_dir: /mnt/Dev
     volumes:
       - "/dev/log:/dev/log"
@@ -369,7 +369,7 @@ services:
           - 7.3.local
 
   phpfpm74:
-    image: devilbox/php-fpm:7.4-mods
+    image: devilbox/php-fpm:7.4-work
     container_name: phpfpm74
     dns_search: williamdes.local
     hostname: 7.4.williamdes.local
@@ -390,7 +390,7 @@ services:
           - 7.4.local
 
   phpfpm80:
-    image: devilbox/php-fpm:8.0-mods
+    image: devilbox/php-fpm:8.0-work
     container_name: phpfpm80
     dns_search: williamdes.local
     hostname: 8.0.williamdes.local
@@ -490,48 +490,48 @@ services:
           - mysql800.williamdes.local
           - mysql800.local
 
-  mysql-master:
+  mysql8011:
+
+  mysql-primary:
     image: "bitnami/mysql:8.0"
     ports:
       - "3306"
     volumes:
-      - "mysql_master_data:/bitnami/mysql/data"
+      - "mysql_primary_data:/bitnami/mysql/data"
     networks:
       williamdeslocal:
         aliases:
-          - mysql-master.williamdes.local
-          - mysql-master
-          - mysql-master.local
+          - mysql-primary.williamdes.local
+          - mysql-primary
+          - mysql-primary.local
     environment:
       - MYSQL_REPLICATION_MODE=master
       - MYSQL_REPLICATION_USER=repl_user
       - MYSQL_USER=sys
       - MYSQL_DATABASE=system
-      # ALLOW_EMPTY_PASSWORD is recommended only for development.
       - ALLOW_EMPTY_PASSWORD=yes
       - MYSQL_ROOT_PASSWORD=password
 
-  mysql-slave:
+  mysql-first-replica:
     image: "bitnami/mysql:8.0"
     ports:
       - "3306"
     depends_on:
-      - mysql-master
+      - mysql-primary
     networks:
       williamdeslocal:
         aliases:
-          - mysql-slave.williamdes.local
-          - mysql-slave
-          - mysql-slave.local
+          - mysql-first-replica.williamdes.local
+          - mysql-first-replica
+          - mysql-first-replica.local
     environment:
       - MYSQL_REPLICATION_MODE=slave
       - MYSQL_REPLICATION_USER=repl_user
       - MYSQL_USER=sys
       - MYSQL_DATABASE=system
-      - MYSQL_MASTER_HOST=mysql-master.williamdes.local
+      - MYSQL_MASTER_HOST=mysql-primary.williamdes.local
       - MYSQL_MASTER_PORT_NUMBER=3306
       - MYSQL_MASTER_ROOT_PASSWORD=password
-      # ALLOW_EMPTY_PASSWORD is recommended only for development.
       - ALLOW_EMPTY_PASSWORD=yes
 
 #  proxy-sql:
