@@ -7,7 +7,7 @@ server {
 	listen	   80;
 	access_log /var/log/nginx/access_localhost.7.4.log;
 	error_log /var/log/nginx/error_localhost.7.4.log error;
-	server_name pma.7.4.local;
+	server_name pma.7.4.local pma.selenium.local;
 	index index.php index.html;
 	root	$folder;
 	server_tokens off;
