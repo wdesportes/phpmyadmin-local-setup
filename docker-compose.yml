@@ -78,65 +78,6 @@ services:
       - MYSQL_USER=public
       - MYSQL_PASSWORD=public
 
-  mysql5726:
-    image: mysql:5.7.26
-    container_name: mysql5726
-    dns_search: williamdes.local
-    hostname: mysql5726.williamdes.local
-    domainname: williamdes.local
-    restart: on-failure:2
-    networks:
-      williamdeslocal:
-        aliases:
-          - mysql5726.williamdes.local
-    volumes:
-      - "/mnt/Dev/!OSS/servers/mysql-server:/var/lib/mysql"
-      - "./servers/php-custom.d:/etc/php-custom.d"
-    ports:
-      - "4406:3306"
-
-  mysql5717:
-    image: mysql:5.7.17
-    container_name: mysql5717
-    dns_search: williamdes.local
-    hostname: mysql5717.williamdes.local
-    domainname: williamdes.local
-    restart: on-failure:2
-    networks:
-      williamdeslocal:
-        aliases:
-          - mysql5717.williamdes.local
-    volumes:
-      - "/mnt/Dev/!OSS/servers/mysql-5726-server:/var/lib/mysql"
-      - "./servers/php-custom.d:/etc/php-custom.d"
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=public
-      - MYSQL_USER=public
-      - MYSQL_PASSWORD=public
-    ports:
-      - "4407:3306"
-
-  mysql578:
-    image: mysql:5.7.8
-    container_name: mysql578
-    dns_search: williamdes.local
-    hostname: mysql578.williamdes.local
-    domainname: williamdes.local
-    restart: on-failure:2
-    networks:
-      williamdeslocal:
-        aliases:
-          - mysql578.williamdes.local
-    volumes:
-      - "/mnt/Dev/!OSS/servers/mysql-578-server:/var/lib/mysql"
-      - "./servers/php-custom.d:/etc/php-custom.d"
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=public
-      - MYSQL_USER=public
-      - MYSQL_PASSWORD=public
-
   nginx:
     image: nginx
     container_name: nginx
@@ -440,11 +381,18 @@ services:
     domainname: williamdes.local
     restart: on-failure:2
     mem_limit: 500m
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
     environment:
       - MYSQL_ROOT_PASSWORD=public
       - MYSQL_DATABASE=public
       - MYSQL_USER=public
       - MYSQL_PASSWORD=public
+    volumes:
+      - "/mnt/Dev/!OSS/servers/mysql-server-80-latest:/var/lib/mysql"
     networks:
       williamdeslocal:
         aliases:
@@ -459,11 +407,18 @@ services:
     domainname: williamdes.local
     restart: on-failure:2
     mem_limit: 500m
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
     environment:
       - MYSQL_ROOT_PASSWORD=public
       - MYSQL_DATABASE=public
       - MYSQL_USER=public
       - MYSQL_PASSWORD=public
+    volumes:
+      - "/mnt/Dev/!OSS/servers/mysql-server-800:/var/lib/mysql"
     networks:
       williamdeslocal:
         aliases:
@@ -478,11 +433,18 @@ services:
     domainname: williamdes.local
     restart: on-failure:2
     mem_limit: 500m
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
     environment:
       - MYSQL_ROOT_PASSWORD=public
       - MYSQL_DATABASE=public
       - MYSQL_USER=public
       - MYSQL_PASSWORD=public
+    volumes:
+      - "/mnt/Dev/!OSS/servers/mysql-server-8011:/var/lib/mysql"
     networks:
       williamdeslocal:
         aliases:
@@ -497,29 +459,39 @@ services:
     domainname: williamdes.local
     restart: on-failure:2
     mem_limit: 500m
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
     environment:
       - MYSQL_ROOT_PASSWORD=public
       - MYSQL_DATABASE=public
       - MYSQL_USER=public
       - MYSQL_PASSWORD=public
+    volumes:
+      - "/mnt/Dev/!OSS/servers/mysql-server-803:/var/lib/mysql"
     networks:
       williamdeslocal:
         aliases:
           - mysql803.williamdes.local
           - mysql803.local
 
-  mysql-primary:
+  mysql80-primary:
     image: "bitnami/mysql:8.0"
-    ports:
-      - "3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-uroot", "-ppassword"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
     volumes:
-      - "mysql_primary_data:/bitnami/mysql/data"
+      - "/mnt/Dev/!OSS/servers/mysql80-primary-80-latest:/bitnami/mysql/data"
     networks:
       williamdeslocal:
         aliases:
-          - mysql-primary.williamdes.local
-          - mysql-primary
-          - mysql-primary.local
+          - mysql80-primary.williamdes.local
+          - mysql80-primary
+          - mysql80-primary.local
     environment:
       - MYSQL_REPLICATION_MODE=master
       - MYSQL_REPLICATION_USER=repl_user
@@ -530,10 +502,8 @@ services:
 
   mysql-first-replica:
     image: "bitnami/mysql:8.0"
-    ports:
-      - "3306"
     depends_on:
-      - mysql-primary
+      - mysql80-primary
     networks:
       williamdeslocal:
         aliases:
@@ -545,10 +515,126 @@ services:
       - MYSQL_REPLICATION_USER=repl_user
       - MYSQL_USER=sys
       - MYSQL_DATABASE=system
-      - MYSQL_MASTER_HOST=mysql-primary.williamdes.local
+      - MYSQL_MASTER_HOST=mysql80-primary.williamdes.local
       - MYSQL_MASTER_PORT_NUMBER=3306
       - MYSQL_MASTER_ROOT_PASSWORD=password
       - ALLOW_EMPTY_PASSWORD=yes
+
+  mysql-second-replica:
+    image: "bitnami/mysql:8.0"
+    depends_on:
+      - mysql80-primary
+    networks:
+      williamdeslocal:
+        aliases:
+          - mysql-second-replica.williamdes.local
+          - mysql-second-replica
+          - mysql-second-replica.local
+    environment:
+      - MYSQL_REPLICATION_MODE=slave
+      - MYSQL_REPLICATION_USER=repl_user
+      - MYSQL_USER=sys
+      - MYSQL_DATABASE=system
+      - MYSQL_MASTER_HOST=mysql80-primary.williamdes.local
+      - MYSQL_MASTER_PORT_NUMBER=3306
+      - MYSQL_MASTER_ROOT_PASSWORD=password
+      - ALLOW_EMPTY_PASSWORD=yes
+
+  mysql57:
+    image: mysql:5.7
+    container_name: mysql57
+    dns_search: williamdes.local
+    hostname: mysql57.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
+    networks:
+      williamdeslocal:
+        aliases:
+          - mysql57.williamdes.local
+    volumes:
+      - "/mnt/Dev/!OSS/servers/mysql-server-57-latest:/var/lib/mysql"
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=public
+      - MYSQL_USER=public
+      - MYSQL_PASSWORD=public
+
+  mysql5726:
+    image: mysql:5.7.26
+    container_name: mysql5726
+    dns_search: williamdes.local
+    hostname: mysql5726.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
+    networks:
+      williamdeslocal:
+        aliases:
+          - mysql5726.williamdes.local
+    volumes:
+      - "/mnt/Dev/!OSS/servers/mysql-server-5726:/var/lib/mysql"
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=public
+      - MYSQL_USER=public
+      - MYSQL_PASSWORD=public
+# https://medium.com/@marinbinzari/reset-root-mysql-password-in-docker-d961c71285e4
+  mysql5717:
+    image: mysql:5.7.17
+    container_name: mysql5717
+    dns_search: williamdes.local
+    hostname: mysql5717.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
+    networks:
+      williamdeslocal:
+        aliases:
+          - mysql5717.williamdes.local
+    volumes:
+      - "/mnt/Dev/!OSS/servers/mysql-server-5717:/var/lib/mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=public
+      - MYSQL_USER=public
+      - MYSQL_PASSWORD=public
+
+  mysql578:
+    image: mysql:5.7.8
+    container_name: mysql578
+    dns_search: williamdes.local
+    hostname: mysql578.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
+    networks:
+      williamdeslocal:
+        aliases:
+          - mysql578.williamdes.local
+    volumes:
+      - "/mnt/Dev/!OSS/servers/mysql-server-578:/var/lib/mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=public
+      - MYSQL_USER=public
+      - MYSQL_PASSWORD=public
 
 #  proxy-sql:
 #    image: proxysql/proxysql
@@ -568,10 +654,6 @@ services:
 #          - proxy-sql.local
 #    volumes:
 #      - "/mnt/Dev/!OSS/proxysql.cnf:/etc/proxysql.cnf"
-
-volumes:
-  mysql_primary_data:
-    driver: local
 
 networks:
   williamdeslocal:
