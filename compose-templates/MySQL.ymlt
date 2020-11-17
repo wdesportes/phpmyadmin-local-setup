@@ -1,0 +1,23 @@
+  mysql${VERSION_INT}:
+    image: mysql:${VERSION_STRING}
+    container_name: mysql${VERSION_INT}
+    dns_search: williamdes.local
+    hostname: mysql${VERSION_INT}.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
+    networks:
+      williamdeslocal:
+        aliases:
+          - mysql${VERSION_INT}.williamdes.local
+    volumes:
+      - "/mnt/Dev/!OSS/servers/mysql-server-${VERSION_INT}:/var/lib/mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=public
+      - MYSQL_USER=public
+      - MYSQL_PASSWORD=public

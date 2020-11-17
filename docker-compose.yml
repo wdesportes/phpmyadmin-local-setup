@@ -1,10 +1,10 @@
 version: "2.3"
 services:
-  mariadb:
+  mariadb104:
     image: crocodile2u/mariadb-rocks:10.4
-    container_name: mariadb
+    container_name: mariadb104
     dns_search: williamdes.local
-    hostname: mariadb.williamdes.local
+    hostname: mariadb104.williamdes.local
     domainname: williamdes.local
     restart: on-failure:2
     healthcheck:
@@ -15,11 +15,9 @@ services:
     networks:
       williamdeslocal:
         aliases:
-          - mariadb.williamdes.local
           - mariadb104.williamdes.local
     volumes:
-      - "/mnt/Dev/!OSS/servers/mariadb-server:/var/lib/mysql"
-      - "./servers/php-custom.d:/etc/php-custom.d"
+      - "/mnt/Dev/!OSS/servers/mariadb104-rocks-server:/var/lib/mysql"
       - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
       - "/mnt/Dev/!OSS/public/mysqld.cnf:/etc/mysql/mariadb.conf.d/ssl.cnf"
     environment:
@@ -49,10 +47,11 @@ services:
     volumes:
       - "/mnt/Dev/!OSS/servers/mariadb105-server:/var/lib/mysql"
     environment:
-      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
       - MYSQL_USER=public
       - MYSQL_PASSWORD=public
+
 
   mariadb102:
     image: mariadb:10.2
@@ -73,11 +72,10 @@ services:
     volumes:
       - "/mnt/Dev/!OSS/servers/mariadb102-server:/var/lib/mysql"
     environment:
-      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
       - MYSQL_USER=public
       - MYSQL_PASSWORD=public
-
   nginx:
     image: nginx
     container_name: nginx
@@ -104,26 +102,6 @@ services:
       - "443:443"
       - "8443:8443"
 
-  #  varnish:
-  #    image: "varnish:latest"
-  #    container_name: varnish
-  #    dns_search: williamdes.local
-  #    hostname: varnish.williamdes.local
-  #    domainname: williamdes.local
-  #    restart: on-failure:2
-  #    mem_limit: 100m
-  #    tmpfs:
-  #      - /var/lib/varnish:exec
-  #    volumes:
-  #      - "/mnt/Dev/!OSS/servers/varnish/:/etc/varnish"
-  #    networks:
-  #      williamdeslocal:
-  #        aliases:
-  #          - varnish.williamdes.local
-  #    ports:
-  #      - "800:80"
-  #      - "4430:443"
-
   pmatest:
     image: phpmyadmin/phpmyadmin:latest
     container_name: pmatest
@@ -143,25 +121,6 @@ services:
     ports:
       - "500:80"
 
-  #  haproxy:
-  #    image: "haproxy:latest"
-  #    container_name: haproxy
-  #    dns_search: williamdes.local
-  #    hostname: haproxy.williamdes.local
-  #    domainname: williamdes.local
-  #    restart: on-failure:2
-  #    mem_limit: 100m
-  #    tmpfs:
-  #      - /var/lib/haproxy:exec
-  #    volumes:
-  #      - "/mnt/Dev/!OSS/servers/haproxy/:/usr/local/etc/haproxy"
-  #    networks:
-  #      williamdeslocal:
-  #        aliases:
-  #          - haproxy.williamdes.local
-  #    ports:
-  #      - "900:80"
-  #      - "4431:443"
 
   phpfpm53:
     image: devilbox/php-fpm-5.3:latest
@@ -184,6 +143,8 @@ services:
           - pma.5.3.local
           - 5.3.local
 
+
+
   phpfpm55:
     image: devilbox/php-fpm:5.5-mods
     container_name: phpfpm55
@@ -205,14 +166,16 @@ services:
           - pma.5.5.local
           - 5.5.local
 
+
+
   phpfpm70:
     image: devilbox/php-fpm:7.0-mods
     container_name: phpfpm70
     dns_search: williamdes.local
     hostname: 7.0.williamdes.local
     domainname: williamdes.local
-    restart: on-failure:0
-    mem_limit: 600m
+    restart: on-failure:2
+    mem_limit: 1g
     working_dir: /mnt/Dev
     volumes:
       - "/dev/log:/dev/log"
@@ -226,14 +189,16 @@ services:
           - pma.7.0.local
           - 7.0.local
 
+
+
   phpfpm71:
     image: devilbox/php-fpm:7.1-mods
     container_name: phpfpm71
     dns_search: williamdes.local
     hostname: 7.1.williamdes.local
     domainname: williamdes.local
-    restart: on-failure:1
-    mem_limit: 600m
+    restart: on-failure:2
+    mem_limit: 1g
     working_dir: /mnt/Dev
     volumes:
       - "/dev/log:/dev/log"
@@ -247,6 +212,8 @@ services:
           - pma.7.1.local
           - 7.1.local
 
+
+
   phpfpm72:
     image: devilbox/php-fpm:7.2-mods
     container_name: phpfpm72
@@ -254,7 +221,7 @@ services:
     hostname: 7.2.williamdes.local
     domainname: williamdes.local
     restart: on-failure:2
-    mem_limit: 600m
+    mem_limit: 1g
     working_dir: /mnt/Dev
     volumes:
       - "/dev/log:/dev/log"
@@ -268,6 +235,8 @@ services:
           - pma.7.2.local
           - 7.2.local
 
+
+
   phpfpm73:
     image: devilbox/php-fpm:7.3-mods
     container_name: phpfpm73
@@ -275,7 +244,7 @@ services:
     hostname: 7.3.williamdes.local
     domainname: williamdes.local
     restart: on-failure:2
-    mem_limit: 600m
+    mem_limit: 1g
     working_dir: /mnt/Dev
     volumes:
       - "/dev/log:/dev/log"
@@ -289,6 +258,8 @@ services:
           - pma.7.3.local
           - 7.3.local
 
+
+
   phpfpm74:
     image: devilbox/php-fpm:7.4-work
     container_name: phpfpm74
@@ -296,7 +267,7 @@ services:
     hostname: 7.4.williamdes.local
     domainname: williamdes.local
     restart: on-failure:2
-    mem_limit: 600m
+    mem_limit: 1g
     working_dir: /mnt/Dev
     volumes:
       - "/dev/log:/dev/log"
@@ -310,6 +281,8 @@ services:
           - pma.7.4.local
           - 7.4.local
 
+
+
   phpfpm80:
     image: devilbox/php-fpm:8.0-work
     container_name: phpfpm80
@@ -317,7 +290,7 @@ services:
     hostname: 8.0.williamdes.local
     domainname: williamdes.local
     restart: on-failure:2
-    mem_limit: 300m
+    mem_limit: 1g
     working_dir: /mnt/Dev
     volumes:
       - "/dev/log:/dev/log"
@@ -330,153 +303,6 @@ services:
           - 8.0.williamdes.local
           - pma.8.0.local
           - 8.0.local
-
-  #mysql55:
-  #image: mysql:5.5
-  #container_name: mysql55
-  #dns_search: williamdes.local
-  #hostname: mysql5.5.williamdes.local
-  #domainname: williamdes.local
-  #restart: on-failure:2
-  #mem_limit: 300m
-  #environment:
-  #- MYSQL_ROOT_PASSWORD=public
-  #- MYSQL_DATABASE=public
-  #- MYSQL_USER=public
-  #- MYSQL_PASSWORD=public
-  #volumes:
-  #- "./servers/php-custom.d:/etc/php-custom.d"
-  #networks:
-  #williamdeslocal:
-  #aliases:
-  #- mysql5.5.williamdes.local
-  #- mysql5.5.local
-
-  #perconadb56:
-  #image: percona:5.6
-  #container_name: perconadb56
-  #dns_search: williamdes.local
-  #hostname: perconadb5.6.williamdes.local
-  #domainname: williamdes.local
-  #restart: on-failure:2
-  #mem_limit: 300m
-  #environment:
-  #- MYSQL_ROOT_PASSWORD=public
-  #- MYSQL_DATABASE=public
-  #- MYSQL_USER=public
-  #- MYSQL_PASSWORD=public
-  #volumes:
-  #- "./servers/php-custom.d:/etc/php-custom.d"
-  #networks:
-  #williamdeslocal:
-  #aliases:
-  #- perconadb5.6.williamdes.local
-  #- perconadb5.6.local
-
-  mysql80:
-    image: "mysql:8.0"
-    container_name: mysql80
-    dns_search: williamdes.local
-    hostname: mysql80.williamdes.local
-    domainname: williamdes.local
-    restart: on-failure:2
-    mem_limit: 500m
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
-      interval: 120s
-      timeout: 1s
-      retries: 3
-    environment:
-      - MYSQL_ROOT_PASSWORD=public
-      - MYSQL_DATABASE=public
-      - MYSQL_USER=public
-      - MYSQL_PASSWORD=public
-    volumes:
-      - "/mnt/Dev/!OSS/servers/mysql-server-80-latest:/var/lib/mysql"
-    networks:
-      williamdeslocal:
-        aliases:
-          - mysql80.williamdes.local
-          - mysql80.local
-
-  mysql800:
-    image: "mysql:8.0"
-    container_name: mysql800
-    dns_search: williamdes.local
-    hostname: mysql800.williamdes.local
-    domainname: williamdes.local
-    restart: on-failure:2
-    mem_limit: 500m
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
-      interval: 120s
-      timeout: 1s
-      retries: 3
-    environment:
-      - MYSQL_ROOT_PASSWORD=public
-      - MYSQL_DATABASE=public
-      - MYSQL_USER=public
-      - MYSQL_PASSWORD=public
-    volumes:
-      - "/mnt/Dev/!OSS/servers/mysql-server-800:/var/lib/mysql"
-    networks:
-      williamdeslocal:
-        aliases:
-          - mysql800.williamdes.local
-          - mysql800.local
-
-  mysql8011:
-    image: "mysql:8.0.11"
-    container_name: mysql8011
-    dns_search: williamdes.local
-    hostname: mysql8011.williamdes.local
-    domainname: williamdes.local
-    restart: on-failure:2
-    mem_limit: 500m
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
-      interval: 120s
-      timeout: 1s
-      retries: 3
-    environment:
-      - MYSQL_ROOT_PASSWORD=public
-      - MYSQL_DATABASE=public
-      - MYSQL_USER=public
-      - MYSQL_PASSWORD=public
-    volumes:
-      - "/mnt/Dev/!OSS/servers/mysql-server-8011:/var/lib/mysql"
-    networks:
-      williamdeslocal:
-        aliases:
-          - mysql8011.williamdes.local
-          - mysql8011.local
-
-  mysql803:
-    image: "mysql:8.0.3"
-    container_name: mysql803
-    dns_search: williamdes.local
-    hostname: mysql803.williamdes.local
-    domainname: williamdes.local
-    restart: on-failure:2
-    mem_limit: 500m
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
-      interval: 120s
-      timeout: 1s
-      retries: 3
-    environment:
-      - MYSQL_ROOT_PASSWORD=public
-      - MYSQL_DATABASE=public
-      - MYSQL_USER=public
-      - MYSQL_PASSWORD=public
-    volumes:
-      - "/mnt/Dev/!OSS/servers/mysql-server-803:/var/lib/mysql"
-    networks:
-      williamdeslocal:
-        aliases:
-          - mysql803.williamdes.local
-          - mysql803.local
-
   mysql80-primary:
     image: "bitnami/mysql:8.0"
     healthcheck:
@@ -540,6 +366,81 @@ services:
       - MYSQL_MASTER_ROOT_PASSWORD=password
       - ALLOW_EMPTY_PASSWORD=yes
 
+  mysql80:
+    image: mysql:8.0
+    container_name: mysql80
+    dns_search: williamdes.local
+    hostname: mysql80.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
+    networks:
+      williamdeslocal:
+        aliases:
+          - mysql80.williamdes.local
+    volumes:
+      - "/mnt/Dev/!OSS/servers/mysql-server-80:/var/lib/mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=public
+      - MYSQL_USER=public
+      - MYSQL_PASSWORD=public
+
+
+  mysql811:
+    image: mysql:8.0.11
+    container_name: mysql811
+    dns_search: williamdes.local
+    hostname: mysql811.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
+    networks:
+      williamdeslocal:
+        aliases:
+          - mysql811.williamdes.local
+    volumes:
+      - "/mnt/Dev/!OSS/servers/mysql-server-811:/var/lib/mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=public
+      - MYSQL_USER=public
+      - MYSQL_PASSWORD=public
+
+
+  mysql803:
+    image: mysql:8.0.3
+    container_name: mysql803
+    dns_search: williamdes.local
+    hostname: mysql803.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
+    networks:
+      williamdeslocal:
+        aliases:
+          - mysql803.williamdes.local
+    volumes:
+      - "/mnt/Dev/!OSS/servers/mysql-server-803:/var/lib/mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=public
+      - MYSQL_USER=public
+      - MYSQL_PASSWORD=public
+
+
   mysql57:
     image: mysql:5.7
     container_name: mysql57
@@ -557,12 +458,13 @@ services:
         aliases:
           - mysql57.williamdes.local
     volumes:
-      - "/mnt/Dev/!OSS/servers/mysql-server-57-latest:/var/lib/mysql"
+      - "/mnt/Dev/!OSS/servers/mysql-server-57:/var/lib/mysql"
     environment:
-      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
       - MYSQL_USER=public
       - MYSQL_PASSWORD=public
+
 
   mysql5726:
     image: mysql:5.7.26
@@ -583,11 +485,12 @@ services:
     volumes:
       - "/mnt/Dev/!OSS/servers/mysql-server-5726:/var/lib/mysql"
     environment:
-      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
       - MYSQL_USER=public
       - MYSQL_PASSWORD=public
-# https://medium.com/@marinbinzari/reset-root-mysql-password-in-docker-d961c71285e4
+
+
   mysql5717:
     image: mysql:5.7.17
     container_name: mysql5717
@@ -612,6 +515,7 @@ services:
       - MYSQL_USER=public
       - MYSQL_PASSWORD=public
 
+
   mysql578:
     image: mysql:5.7.8
     container_name: mysql578
@@ -635,26 +539,110 @@ services:
       - MYSQL_DATABASE=public
       - MYSQL_USER=public
       - MYSQL_PASSWORD=public
+  #  proxy-sql:
+  #    image: proxysql/proxysql
+  #    container_name: proxy-sql
+  #    dns_search: williamdes.local
+  #    hostname: proxy-sql.williamdes.local
+  #    domainname: williamdes.local
+  #    ports:
+  #      - "16032:6032"
+  #      - "16033:6033"
+  #      - "16034:6080"
+  #    networks:
+  #      williamdeslocal:
+  #        aliases:
+  #          - proxy-sql.williamdes.local
+  #          - proxy-sql
+  #          - proxy-sql.local
+  #    volumes:
+  #      - "/mnt/Dev/!OSS/proxysql.cnf:/etc/proxysql.cnf"
 
-#  proxy-sql:
-#    image: proxysql/proxysql
-#    container_name: proxy-sql
-#    dns_search: williamdes.local
-#    hostname: proxy-sql.williamdes.local
-#    domainname: williamdes.local
-#    ports:
-#      - "16032:6032"
-#      - "16033:6033"
-#      - "16034:6080"
-#    networks:
-#      williamdeslocal:
-#        aliases:
-#          - proxy-sql.williamdes.local
-#          - proxy-sql
-#          - proxy-sql.local
-#    volumes:
-#      - "/mnt/Dev/!OSS/proxysql.cnf:/etc/proxysql.cnf"
 
+  # https://medium.com/@marinbinzari/reset-root-mysql-password-in-docker-d961c71285e4
+
+
+  #mysql55:
+  #image: mysql:5.5
+  #container_name: mysql55
+  #dns_search: williamdes.local
+  #hostname: mysql5.5.williamdes.local
+  #domainname: williamdes.local
+  #restart: on-failure:2
+  #mem_limit: 300m
+  #environment:
+  #- MYSQL_ROOT_PASSWORD=public
+  #- MYSQL_DATABASE=public
+  #- MYSQL_USER=public
+  #- MYSQL_PASSWORD=public
+  #volumes:
+  #- "./servers/php-custom.d:/etc/php-custom.d"
+  #networks:
+  #williamdeslocal:
+  #aliases:
+  #- mysql5.5.williamdes.local
+  #- mysql5.5.local
+
+  #perconadb56:
+  #image: percona:5.6
+  #container_name: perconadb56
+  #dns_search: williamdes.local
+  #hostname: perconadb5.6.williamdes.local
+  #domainname: williamdes.local
+  #restart: on-failure:2
+  #mem_limit: 300m
+  #environment:
+  #- MYSQL_ROOT_PASSWORD=public
+  #- MYSQL_DATABASE=public
+  #- MYSQL_USER=public
+  #- MYSQL_PASSWORD=public
+  #volumes:
+  #- "./servers/php-custom.d:/etc/php-custom.d"
+  #networks:
+  #williamdeslocal:
+  #aliases:
+  #- perconadb5.6.williamdes.local
+  #- perconadb5.6.local
+
+  #  haproxy:
+  #    image: "haproxy:latest"
+  #    container_name: haproxy
+  #    dns_search: williamdes.local
+  #    hostname: haproxy.williamdes.local
+  #    domainname: williamdes.local
+  #    restart: on-failure:2
+  #    mem_limit: 100m
+  #    tmpfs:
+  #      - /var/lib/haproxy:exec
+  #    volumes:
+  #      - "/mnt/Dev/!OSS/servers/haproxy/:/usr/local/etc/haproxy"
+  #    networks:
+  #      williamdeslocal:
+  #        aliases:
+  #          - haproxy.williamdes.local
+  #    ports:
+  #      - "900:80"
+  #      - "4431:443"
+
+  #  varnish:
+  #    image: "varnish:latest"
+  #    container_name: varnish
+  #    dns_search: williamdes.local
+  #    hostname: varnish.williamdes.local
+  #    domainname: williamdes.local
+  #    restart: on-failure:2
+  #    mem_limit: 100m
+  #    tmpfs:
+  #      - /var/lib/varnish:exec
+  #    volumes:
+  #      - "/mnt/Dev/!OSS/servers/varnish/:/etc/varnish"
+  #    networks:
+  #      williamdeslocal:
+  #        aliases:
+  #          - varnish.williamdes.local
+  #    ports:
+  #      - "800:80"
+  #      - "4430:443"
 networks:
   williamdeslocal:
     driver: bridge

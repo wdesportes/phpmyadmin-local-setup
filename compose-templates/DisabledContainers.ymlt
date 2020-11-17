@@ -1,0 +1,105 @@
+
+  #  proxy-sql:
+  #    image: proxysql/proxysql
+  #    container_name: proxy-sql
+  #    dns_search: williamdes.local
+  #    hostname: proxy-sql.williamdes.local
+  #    domainname: williamdes.local
+  #    ports:
+  #      - "16032:6032"
+  #      - "16033:6033"
+  #      - "16034:6080"
+  #    networks:
+  #      williamdeslocal:
+  #        aliases:
+  #          - proxy-sql.williamdes.local
+  #          - proxy-sql
+  #          - proxy-sql.local
+  #    volumes:
+  #      - "/mnt/Dev/!OSS/proxysql.cnf:/etc/proxysql.cnf"
+
+
+  # https://medium.com/@marinbinzari/reset-root-mysql-password-in-docker-d961c71285e4
+
+
+  #mysql55:
+  #image: mysql:5.5
+  #container_name: mysql55
+  #dns_search: williamdes.local
+  #hostname: mysql5.5.williamdes.local
+  #domainname: williamdes.local
+  #restart: on-failure:2
+  #mem_limit: 300m
+  #environment:
+  #- MYSQL_ROOT_PASSWORD=public
+  #- MYSQL_DATABASE=public
+  #- MYSQL_USER=public
+  #- MYSQL_PASSWORD=public
+  #volumes:
+  #- "./servers/php-custom.d:/etc/php-custom.d"
+  #networks:
+  #williamdeslocal:
+  #aliases:
+  #- mysql5.5.williamdes.local
+  #- mysql5.5.local
+
+  #perconadb56:
+  #image: percona:5.6
+  #container_name: perconadb56
+  #dns_search: williamdes.local
+  #hostname: perconadb5.6.williamdes.local
+  #domainname: williamdes.local
+  #restart: on-failure:2
+  #mem_limit: 300m
+  #environment:
+  #- MYSQL_ROOT_PASSWORD=public
+  #- MYSQL_DATABASE=public
+  #- MYSQL_USER=public
+  #- MYSQL_PASSWORD=public
+  #volumes:
+  #- "./servers/php-custom.d:/etc/php-custom.d"
+  #networks:
+  #williamdeslocal:
+  #aliases:
+  #- perconadb5.6.williamdes.local
+  #- perconadb5.6.local
+
+  #  haproxy:
+  #    image: "haproxy:latest"
+  #    container_name: haproxy
+  #    dns_search: williamdes.local
+  #    hostname: haproxy.williamdes.local
+  #    domainname: williamdes.local
+  #    restart: on-failure:2
+  #    mem_limit: 100m
+  #    tmpfs:
+  #      - /var/lib/haproxy:exec
+  #    volumes:
+  #      - "/mnt/Dev/!OSS/servers/haproxy/:/usr/local/etc/haproxy"
+  #    networks:
+  #      williamdeslocal:
+  #        aliases:
+  #          - haproxy.williamdes.local
+  #    ports:
+  #      - "900:80"
+  #      - "4431:443"
+
+  #  varnish:
+  #    image: "varnish:latest"
+  #    container_name: varnish
+  #    dns_search: williamdes.local
+  #    hostname: varnish.williamdes.local
+  #    domainname: williamdes.local
+  #    restart: on-failure:2
+  #    mem_limit: 100m
+  #    tmpfs:
+  #      - /var/lib/varnish:exec
+  #    volumes:
+  #      - "/mnt/Dev/!OSS/servers/varnish/:/etc/varnish"
+  #    networks:
+  #      williamdeslocal:
+  #        aliases:
+  #          - varnish.williamdes.local
+  #    ports:
+  #      - "800:80"
+  #      - "4430:443"

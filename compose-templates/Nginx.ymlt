@@ -1,0 +1,45 @@
+
+  nginx:
+    image: nginx
+    container_name: nginx
+    dns_search: williamdes.local
+    hostname: nginx.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    mem_limit: 100m
+    volumes:
+      - "/mnt/Dev/!OSS/servers/nginx/:/etc/nginx"
+      - "/dev/log:/dev/log"
+      - "/mnt/Dev:/mnt/Dev"
+      - "/var/log/containers/nginx:/var/log/nginx"
+    networks:
+      williamdeslocal:
+        aliases:
+          - nginx.williamdes.local
+          - proxy1.local
+          - proxy2.local
+          - 8.0.local
+          - pma.selenium.local
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8443:8443"
+
+  pmatest:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: pmatest
+    dns_search: williamdes.local
+    hostname: pmatest.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    mem_limit: 100m
+    networks:
+      williamdeslocal:
+        aliases:
+          - pmatest.williamdes.local
+    env_file:
+      - ./pma.env
+    volumes:
+      - ./config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro
+    ports:
+      - "500:80"

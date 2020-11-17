@@ -1,0 +1,21 @@
+
+  phpfpm${VERSION_INT}:
+    image: ${CONTAINER_IMAGE}
+    container_name: phpfpm${VERSION_INT}
+    dns_search: williamdes.local
+    hostname: ${VERSION_STRING}.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    mem_limit: 1g
+    working_dir: /mnt/Dev
+    volumes:
+      - "/dev/log:/dev/log"
+      - "/mnt/Dev:/mnt/Dev"
+      - "./servers/php-custom.d:/etc/php-custom.d"
+      - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
+    networks:
+      williamdeslocal:
+        aliases:
+          - ${VERSION_STRING}.williamdes.local
+          - pma.${VERSION_STRING}.local
+          - ${VERSION_STRING}.local

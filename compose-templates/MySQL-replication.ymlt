@@ -1,0 +1,63 @@
+
+  mysql80-primary:
+    image: "bitnami/mysql:8.0"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-uroot", "-ppassword"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
+    volumes:
+      - "/mnt/Dev/!OSS/servers/mysql80-primary-80-latest:/bitnami/mysql/data"
+    networks:
+      williamdeslocal:
+        aliases:
+          - mysql80-primary.williamdes.local
+          - mysql80-primary
+          - mysql80-primary.local
+    environment:
+      - MYSQL_REPLICATION_MODE=master
+      - MYSQL_REPLICATION_USER=repl_user
+      - MYSQL_USER=sys
+      - MYSQL_DATABASE=system
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_ROOT_PASSWORD=password
+
+  mysql-first-replica:
+    image: "bitnami/mysql:8.0"
+    depends_on:
+      - mysql80-primary
+    networks:
+      williamdeslocal:
+        aliases:
+          - mysql-first-replica.williamdes.local
+          - mysql-first-replica
+          - mysql-first-replica.local
+    environment:
+      - MYSQL_REPLICATION_MODE=slave
+      - MYSQL_REPLICATION_USER=repl_user
+      - MYSQL_USER=sys
+      - MYSQL_DATABASE=system
+      - MYSQL_MASTER_HOST=mysql80-primary.williamdes.local
+      - MYSQL_MASTER_PORT_NUMBER=3306
+      - MYSQL_MASTER_ROOT_PASSWORD=password
+      - ALLOW_EMPTY_PASSWORD=yes
+
+  mysql-second-replica:
+    image: "bitnami/mysql:8.0"
+    depends_on:
+      - mysql80-primary
+    networks:
+      williamdeslocal:
+        aliases:
+          - mysql-second-replica.williamdes.local
+          - mysql-second-replica
+          - mysql-second-replica.local
+    environment:
+      - MYSQL_REPLICATION_MODE=slave
+      - MYSQL_REPLICATION_USER=repl_user
+      - MYSQL_USER=sys
+      - MYSQL_DATABASE=system
+      - MYSQL_MASTER_HOST=mysql80-primary.williamdes.local
+      - MYSQL_MASTER_PORT_NUMBER=3306
+      - MYSQL_MASTER_ROOT_PASSWORD=password
+      - ALLOW_EMPTY_PASSWORD=yes
