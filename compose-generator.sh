@@ -21,10 +21,12 @@ function renderVersionBlock() {
     TEMPLATE_NAME="${1}"
     INPUT="${2}"
     CONTAINER_IMAGE_PREFIX="${3}"
+    XDEBUG__REMOTE_PORT="${4}"
 	for VERSION in ${INPUT}; do
 		export VERSION_STRING=$(jq -r '.versionName' <<< ${VERSION})
 		export VERSION_INT=$(jq -r '.versionCode' <<< ${VERSION})
 		export CONTAINER_IMAGE=$(jq -r '.containerImage | select (.!=null)' <<< ${VERSION})
+		export PHP_INI_XDEBUG__REMOTE_PORT=$(jq -r '.xdebugPort | select (.!=null)' <<< ${VERSION})
 		echo -e '\n'
 		renderTemplate "${TEMPLATE_NAME}"
 	done

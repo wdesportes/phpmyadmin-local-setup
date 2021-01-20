@@ -141,6 +141,10 @@ services:
     restart: on-failure:2
     mem_limit: 1g
     working_dir: /mnt/Dev
+    environment:
+      PHP_EXTENSION_XDEBUG: ${PHP_EXTENSION_XDEBUG:-0}
+      PHP_INI_XDEBUG__REMOTE_PORT: 10053
+      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10053 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0 remote_log=/var/log/xdebug.log}
     volumes:
       - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
@@ -164,6 +168,10 @@ services:
     restart: on-failure:2
     mem_limit: 1g
     working_dir: /mnt/Dev
+    environment:
+      PHP_EXTENSION_XDEBUG: ${PHP_EXTENSION_XDEBUG:-0}
+      PHP_INI_XDEBUG__REMOTE_PORT: 10055
+      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10055 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0 remote_log=/var/log/xdebug.log}
     volumes:
       - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
@@ -187,6 +195,10 @@ services:
     restart: on-failure:2
     mem_limit: 1g
     working_dir: /mnt/Dev
+    environment:
+      PHP_EXTENSION_XDEBUG: ${PHP_EXTENSION_XDEBUG:-0}
+      PHP_INI_XDEBUG__REMOTE_PORT: 10070
+      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10070 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0 remote_log=/var/log/xdebug.log}
     volumes:
       - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
@@ -210,6 +222,10 @@ services:
     restart: on-failure:2
     mem_limit: 1g
     working_dir: /mnt/Dev
+    environment:
+      PHP_EXTENSION_XDEBUG: ${PHP_EXTENSION_XDEBUG:-0}
+      PHP_INI_XDEBUG__REMOTE_PORT: 10071
+      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10071 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0 remote_log=/var/log/xdebug.log}
     volumes:
       - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
@@ -233,6 +249,10 @@ services:
     restart: on-failure:2
     mem_limit: 1g
     working_dir: /mnt/Dev
+    environment:
+      PHP_EXTENSION_XDEBUG: ${PHP_EXTENSION_XDEBUG:-0}
+      PHP_INI_XDEBUG__REMOTE_PORT: 10072
+      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10072 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0 remote_log=/var/log/xdebug.log}
     volumes:
       - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
@@ -256,6 +276,10 @@ services:
     restart: on-failure:2
     mem_limit: 1g
     working_dir: /mnt/Dev
+    environment:
+      PHP_EXTENSION_XDEBUG: ${PHP_EXTENSION_XDEBUG:-0}
+      PHP_INI_XDEBUG__REMOTE_PORT: 10073
+      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10073 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0 remote_log=/var/log/xdebug.log}
     volumes:
       - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
@@ -279,6 +303,10 @@ services:
     restart: on-failure:2
     mem_limit: 1g
     working_dir: /mnt/Dev
+    environment:
+      PHP_EXTENSION_XDEBUG: ${PHP_EXTENSION_XDEBUG:-0}
+      PHP_INI_XDEBUG__REMOTE_PORT: 10074
+      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10074 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0 remote_log=/var/log/xdebug.log}
     volumes:
       - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
@@ -302,6 +330,10 @@ services:
     restart: on-failure:2
     mem_limit: 1g
     working_dir: /mnt/Dev
+    environment:
+      PHP_EXTENSION_XDEBUG: ${PHP_EXTENSION_XDEBUG:-0}
+      PHP_INI_XDEBUG__REMOTE_PORT: 10080
+      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10080 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0 remote_log=/var/log/xdebug.log}
     volumes:
       - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
@@ -656,3 +688,7 @@ services:
 networks:
   williamdeslocal:
     driver: bridge
+    ipam:
+      config:
+        - subnet: "172.19.0.0/16"
+          gateway: "172.19.0.1"

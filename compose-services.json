@@ -43,41 +43,49 @@
 		{
 			"versionCode": 53,
 			"versionName": "5.3",
+			"xdebugPort": 10053,
 			"containerImage": "devilbox/php-fpm-5.3:latest"
 		},
 		{
 			"versionCode": 55,
 			"versionName": "5.5",
+			"xdebugPort": 10055,
 			"containerImage": "devilbox/php-fpm:5.5-mods"
 		},
 		{
 			"versionCode": 70,
 			"versionName": "7.0",
+			"xdebugPort": 10070,
 			"containerImage": "devilbox/php-fpm:7.0-mods"
 		},
 		{
 			"versionCode": 71,
 			"versionName": "7.1",
+			"xdebugPort": 10071,
 			"containerImage": "devilbox/php-fpm:7.1-mods"
 		},
 		{
 			"versionCode": 72,
 			"versionName": "7.2",
+			"xdebugPort": 10072,
 			"containerImage": "devilbox/php-fpm:7.2-mods"
 		},
 		{
 			"versionCode": 73,
 			"versionName": "7.3",
+			"xdebugPort": 10073,
 			"containerImage": "devilbox/php-fpm:7.3-mods"
 		},
 		{
 			"versionCode": 74,
 			"versionName": "7.4",
+			"xdebugPort": 10074,
 			"containerImage": "devilbox/php-fpm:7.4-work"
 		},
 		{
 			"versionCode": 80,
 			"versionName": "8.0",
+			"xdebugPort": 10080,
 			"containerImage": "devilbox/php-fpm:8.0-work"
 		}
 	]
