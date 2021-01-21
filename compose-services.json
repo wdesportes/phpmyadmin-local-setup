@@ -1,0 +1,84 @@
+{
+	"mariadb": [
+		{
+			"versionCode": 105,
+			"versionName": "10.5"
+		},
+		{
+			"versionCode": 102,
+			"versionName": "10.2"
+		}
+	],
+	"mysql": [
+		{
+			"versionCode": 80,
+			"versionName": "8.0"
+		},
+		{
+			"versionCode": 811,
+			"versionName": "8.0.11"
+		},
+		{
+			"versionCode": 803,
+			"versionName": "8.0.3"
+		},
+		{
+			"versionCode": 57,
+			"versionName": "5.7"
+		},
+		{
+			"versionCode": 5726,
+			"versionName": "5.7.26"
+		},
+		{
+			"versionCode": 5717,
+			"versionName": "5.7.17"
+		},
+		{
+			"versionCode": 578,
+			"versionName": "5.7.8"
+		}
+	],
+	"phpfpm": [
+		{
+			"versionCode": 53,
+			"versionName": "5.3",
+			"containerImage": "devilbox/php-fpm-5.3:latest"
+		},
+		{
+			"versionCode": 55,
+			"versionName": "5.5",
+			"containerImage": "devilbox/php-fpm:5.5-mods"
+		},
+		{
+			"versionCode": 70,
+			"versionName": "7.0",
+			"containerImage": "devilbox/php-fpm:7.0-mods"
+		},
+		{
+			"versionCode": 71,
+			"versionName": "7.1",
+			"containerImage": "devilbox/php-fpm:7.1-mods"
+		},
+		{
+			"versionCode": 72,
+			"versionName": "7.2",
+			"containerImage": "devilbox/php-fpm:7.2-mods"
+		},
+		{
+			"versionCode": 73,
+			"versionName": "7.3",
+			"containerImage": "devilbox/php-fpm:7.3-mods"
+		},
+		{
+			"versionCode": 74,
+			"versionName": "7.4",
+			"containerImage": "devilbox/php-fpm:7.4-work"
+		},
+		{
+			"versionCode": 80,
+			"versionName": "8.0",
+			"containerImage": "devilbox/php-fpm:8.0-work"
+		}
+	]
+}
