@@ -1,0 +1,68 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+		{
+            "name": "Listen for XDebug - php 7.1",
+            "type": "php",
+            "runtimeExecutable": "/bin/php",
+            "request": "launch",
+			"port": 10072,
+			"hostname": "0.0.0.0",
+            "log": true,
+            "ignore": [
+                "**/vendor/**/*.php"
+            ]
+        },
+		{
+            "name": "Listen for XDebug - php 7.2",
+            "type": "php",
+            "runtimeExecutable": "/bin/php",
+            "request": "launch",
+			"port": 10072,
+			"hostname": "0.0.0.0",
+            "log": true,
+            "ignore": [
+                "**/vendor/**/*.php"
+            ]
+        },
+		{
+            "name": "Listen for XDebug - php 7.3",
+            "type": "php",
+            "runtimeExecutable": "/bin/php",
+            "request": "launch",
+			"port": 10073,
+			"hostname": "0.0.0.0",
+            "log": true,
+            "ignore": [
+                "**/vendor/**/*.php"
+            ]
+        },
+        {
+            "name": "Listen for XDebug - php 7.4",
+            "type": "php",
+            "runtimeExecutable": "/bin/php",
+            "request": "launch",
+			"port": 10074,
+			"hostname": "0.0.0.0",
+            "log": true,
+            "ignore": [
+                "**/vendor/**/*.php"
+            ]
+		},
+		{
+            "name": "Listen for XDebug - php 8.0",
+            "type": "php",
+            "runtimeExecutable": "/bin/php",
+            "request": "launch",
+			"port": 10080,
+			"hostname": "0.0.0.0",
+            "log": true,
+            "ignore": [
+                "**/vendor/**/*.php"
+            ]
+        },
+    ]
+}
