@@ -144,7 +144,7 @@ services:
     environment:
       PHP_EXTENSION_XDEBUG: ${PHP_EXTENSION_XDEBUG:-0}
       PHP_INI_XDEBUG__REMOTE_PORT: 10053
-      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10053 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0 remote_log=/var/log/xdebug.log}
+      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10053 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0}
     volumes:
       - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
@@ -171,7 +171,7 @@ services:
     environment:
       PHP_EXTENSION_XDEBUG: ${PHP_EXTENSION_XDEBUG:-0}
       PHP_INI_XDEBUG__REMOTE_PORT: 10055
-      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10055 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0 remote_log=/var/log/xdebug.log}
+      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10055 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0}
     volumes:
       - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
@@ -198,7 +198,7 @@ services:
     environment:
       PHP_EXTENSION_XDEBUG: ${PHP_EXTENSION_XDEBUG:-0}
       PHP_INI_XDEBUG__REMOTE_PORT: 10070
-      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10070 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0 remote_log=/var/log/xdebug.log}
+      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10070 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0}
     volumes:
       - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
@@ -225,7 +225,7 @@ services:
     environment:
       PHP_EXTENSION_XDEBUG: ${PHP_EXTENSION_XDEBUG:-0}
       PHP_INI_XDEBUG__REMOTE_PORT: 10071
-      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10071 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0 remote_log=/var/log/xdebug.log}
+      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10071 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0}
     volumes:
       - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
@@ -252,7 +252,7 @@ services:
     environment:
       PHP_EXTENSION_XDEBUG: ${PHP_EXTENSION_XDEBUG:-0}
       PHP_INI_XDEBUG__REMOTE_PORT: 10072
-      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10072 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0 remote_log=/var/log/xdebug.log}
+      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10072 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0}
     volumes:
       - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
@@ -279,7 +279,7 @@ services:
     environment:
       PHP_EXTENSION_XDEBUG: ${PHP_EXTENSION_XDEBUG:-0}
       PHP_INI_XDEBUG__REMOTE_PORT: 10073
-      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10073 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0 remote_log=/var/log/xdebug.log}
+      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10073 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0}
     volumes:
       - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
@@ -306,7 +306,7 @@ services:
     environment:
       PHP_EXTENSION_XDEBUG: ${PHP_EXTENSION_XDEBUG:-0}
       PHP_INI_XDEBUG__REMOTE_PORT: 10074
-      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10074 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0 remote_log=/var/log/xdebug.log}
+      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10074 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0}
     volumes:
       - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
@@ -333,7 +333,7 @@ services:
     environment:
       PHP_EXTENSION_XDEBUG: ${PHP_EXTENSION_XDEBUG:-0}
       PHP_INI_XDEBUG__REMOTE_PORT: 10080
-      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10080 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0 remote_log=/var/log/xdebug.log}
+      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10080 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0}
     volumes:
       - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"

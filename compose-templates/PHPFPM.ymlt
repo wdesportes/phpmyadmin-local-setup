@@ -11,7 +11,7 @@
     environment:
       PHP_EXTENSION_XDEBUG: ${PHP_EXTENSION_XDEBUG:-0}
       PHP_INI_XDEBUG__REMOTE_PORT: ${PHP_INI_XDEBUG__REMOTE_PORT}
-      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=${PHP_INI_XDEBUG__REMOTE_PORT} remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0 remote_log=/var/log/xdebug.log}
+      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=${PHP_INI_XDEBUG__REMOTE_PORT} remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0}
     volumes:
       - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
