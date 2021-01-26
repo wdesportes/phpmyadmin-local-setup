@@ -1,2 +1,12 @@
-#!/bin/bash
+#!/bin/sh
+
+ROOT="$(dirname $0)"
+
+if [ ! -f "$ROOT/servers/nginx/nginx-selfsigned.key" ]; then
+	echo 'Missing nginx self cert'
+	openssl req -nodes -x509 -newkey rsa:4096 -keyout servers/nginx/nginx-selfsigned.key \
+    	-out servers/nginx/nginx-selfsigned.crt -days 365 \
+    	-subj "/C=FR/O=Williamdes/OU=Testing/CN=*.local/CN=*.test/emailAddress=williamdes@wdes.fr"
+fi
+
 docker-compose -p local $@
