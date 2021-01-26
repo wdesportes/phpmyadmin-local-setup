@@ -13,8 +13,8 @@ services:
       williamdeslocal:
         aliases:
           - pmatest.williamdes.local
-    env_file:
-      - ./pma.env
+    environment:
+        UPLOAD_LIMIT: 2G
     sysctls:
       - net.ipv4.ip_unprivileged_port_start=0
     volumes:

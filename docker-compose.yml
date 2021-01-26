@@ -124,8 +124,8 @@ services:
       williamdeslocal:
         aliases:
           - pmatest.williamdes.local
-    env_file:
-      - ./pma.env
+    environment:
+        UPLOAD_LIMIT: 2G
     volumes:
       - ./config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro
     ports:
