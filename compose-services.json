@@ -35,6 +35,10 @@
 			"versionName": "5.7.17"
 		},
 		{
+			"versionCode": 5722,
+			"versionName": "5.7.22"
+		},
+		{
 			"versionCode": 578,
 			"versionName": "5.7.8"
 		}
@@ -87,6 +91,12 @@
 			"versionName": "8.0",
 			"xdebugPort": 10080,
 			"containerImage": "devilbox/php-fpm:8.0-work"
+		},
+		{
+			"versionCode": 81,
+			"versionName": "8.1",
+			"xdebugPort": 10081,
+			"containerImage": "devilbox/php-fpm:8.1-work"
 		}
 	]
 }

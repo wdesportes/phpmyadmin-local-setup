@@ -345,6 +345,33 @@ services:
           - 8.0.williamdes.local
           - pma.8.0.local
           - 8.0.local
+
+
+
+  phpfpm81:
+    image: devilbox/php-fpm:8.1-work
+    container_name: phpfpm81
+    dns_search: williamdes.local
+    hostname: 8.1.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    mem_limit: 1g
+    working_dir: /mnt/Dev
+    environment:
+      PHP_EXTENSION_XDEBUG: ${PHP_EXTENSION_XDEBUG:-0}
+      PHP_INI_XDEBUG__REMOTE_PORT: 10081
+      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10081 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0}
+    volumes:
+      - "/dev/log:/dev/log"
+      - "/mnt/Dev:/mnt/Dev"
+      - "./servers/php-custom.d:/etc/php-custom.d"
+      - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
+    networks:
+      williamdeslocal:
+        aliases:
+          - 8.1.williamdes.local
+          - pma.8.1.local
+          - 8.1.local
   mysql80-primary:
     image: "bitnami/mysql:8.0"
     healthcheck:
@@ -551,6 +578,31 @@ services:
           - mysql5717.williamdes.local
     volumes:
       - "/mnt/Dev/!OSS/servers/mysql-server-5717:/var/lib/mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=public
+      - MYSQL_USER=public
+      - MYSQL_PASSWORD=public
+
+
+  mysql5722:
+    image: mysql:5.7.22
+    container_name: mysql5722
+    dns_search: williamdes.local
+    hostname: mysql5722.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
+    networks:
+      williamdeslocal:
+        aliases:
+          - mysql5722.williamdes.local
+    volumes:
+      - "/mnt/Dev/!OSS/servers/mysql-server-5722:/var/lib/mysql"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
