@@ -25,7 +25,8 @@
   mysql-first-replica:
     image: "bitnami/mysql:8.0"
     depends_on:
-      - mysql80-primary
+      mysql80-primary:
+        condition: service_healthy
     networks:
       williamdeslocal:
         aliases:
@@ -45,7 +46,8 @@
   mysql-second-replica:
     image: "bitnami/mysql:8.0"
     depends_on:
-      - mysql80-primary
+      mysql80-primary:
+        condition: service_healthy
     networks:
       williamdeslocal:
         aliases:

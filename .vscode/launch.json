@@ -64,5 +64,17 @@
                 "**/vendor/**/*.php"
             ]
         },
+		{
+            "name": "Listen for XDebug - php 8.1",
+            "type": "php",
+            "runtimeExecutable": "/bin/php",
+            "request": "launch",
+			"port": 10081,
+			"hostname": "0.0.0.0",
+            "log": true,
+            "ignore": [
+                "**/vendor/**/*.php"
+            ]
+        }
     ]
 }
