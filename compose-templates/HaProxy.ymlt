@@ -1,0 +1,21 @@
+
+  haproxy:
+    depends_on:
+      - nginx-fpm-lowmem
+    image: haproxy:lts-alpine
+    dns_search: williamdes.local
+    hostname: haproxy.williamdes.local
+    domainname: haproxy.williamdes.local
+    container_name: haproxy.williamdes.local
+    mem_limit: 1G
+    mem_reservation: 100m
+    ports:
+      - ${HTTP_BIND_PORT:-8084}:80
+      - ${HTTP_BIND_HAPROXY_ADMIN_PORT:-8082}:8082
+    volumes:
+      - ./servers/haproxy/haproxy2.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    networks:
+      williamdeslocal:
+        aliases:
+          - haproxy.williamdes.local
+    restart: on-failure:12

@@ -1,0 +1,23 @@
+
+  nginx-fpm-lowmem:
+    image: ghcr.io/sudo-bot/gh-deployer-container/phpmyadmin
+    container_name: nginx-fpm-lowmem
+    dns_search: williamdes.local
+    hostname: 7.4-lowmem.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    mem_limit: 128M
+    working_dir: /mnt/Dev
+    environment:
+      - SKIP_DEPLOY=yes
+      - MEMORY_LIMIT=124M
+    ports:
+      - "8085:80"
+    volumes:
+      - "/mnt/Dev/phpmyadmintest:/home/www/phpMyAdmin"
+    networks:
+      williamdeslocal:
+        aliases:
+          - 7.4-lowmem.williamdes.local
+          - pma.7.4-lowmem.local
+          - 7.4-lowmem.local

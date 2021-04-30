@@ -43,7 +43,11 @@ COMPOSE_SERVICES+=$(renderTemplate "Nginx")
 
 COMPOSE_SERVICES+=$(renderVersionBlock "PHPFPM" "$(getPHPFPMVersions)")
 
-COMPOSE_SERVICES+=$(renderTemplate "MySQL-replication")
+COMPOSE_SERVICES+=$(renderTemplate "HaProxy")
+
+COMPOSE_SERVICES+=$(renderTemplate "FPM-slim")
+
+#COMPOSE_SERVICES+=$(renderTemplate "MySQL-replication")
 
 COMPOSE_SERVICES+=$(renderVersionBlock "MySQL" "$(getMySQLVersions)")
 

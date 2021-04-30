@@ -372,70 +372,48 @@ services:
           - 8.1.williamdes.local
           - pma.8.1.local
           - 8.1.local
-  mysql80-primary:
-    image: "bitnami/mysql:8.0"
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-uroot", "-ppassword"]
-      interval: 120s
-      timeout: 1s
-      retries: 3
+  haproxy:
+    depends_on:
+      - nginx-fpm-lowmem
+    image: haproxy:lts-alpine
+    dns_search: williamdes.local
+    hostname: haproxy.williamdes.local
+    domainname: haproxy.williamdes.local
+    container_name: haproxy.williamdes.local
+    mem_limit: 1G
+    mem_reservation: 100m
+    ports:
+      - ${HTTP_BIND_PORT:-8084}:80
+      - ${HTTP_BIND_HAPROXY_ADMIN_PORT:-8082}:8082
     volumes:
-      - "/mnt/Dev/!OSS/servers/mysql-server-80-primary-80-latest:/bitnami/mysql/data"
+      - ./servers/haproxy/haproxy2.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
     networks:
       williamdeslocal:
         aliases:
-          - mysql80-primary.williamdes.local
-          - mysql80-primary
-          - mysql80-primary.local
+          - haproxy.williamdes.local
+    restart: on-failure:12
+  nginx-fpm-lowmem:
+    image: ghcr.io/sudo-bot/gh-deployer-container/phpmyadmin
+    container_name: nginx-fpm-lowmem
+    dns_search: williamdes.local
+    hostname: 7.4-lowmem.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    mem_limit: 128M
+    working_dir: /mnt/Dev
     environment:
-      - MYSQL_REPLICATION_MODE=master
-      - MYSQL_REPLICATION_USER=repl_user
-      - MYSQL_USER=sys
-      - MYSQL_DATABASE=system
-      - ALLOW_EMPTY_PASSWORD=yes
-      - MYSQL_ROOT_PASSWORD=password
-
-  mysql-first-replica:
-    image: "bitnami/mysql:8.0"
-    depends_on:
-      mysql80-primary:
-        condition: service_healthy
+      - SKIP_DEPLOY=yes
+      - MEMORY_LIMIT=124M
+    ports:
+      - "8085:80"
+    volumes:
+      - "/mnt/Dev/phpmyadmintest:/home/www/phpMyAdmin"
     networks:
       williamdeslocal:
         aliases:
-          - mysql-first-replica.williamdes.local
-          - mysql-first-replica
-          - mysql-first-replica.local
-    environment:
-      - MYSQL_REPLICATION_MODE=slave
-      - MYSQL_REPLICATION_USER=repl_user
-      - MYSQL_USER=sys
-      - MYSQL_DATABASE=system
-      - MYSQL_MASTER_HOST=mysql80-primary.williamdes.local
-      - MYSQL_MASTER_PORT_NUMBER=3306
-      - MYSQL_MASTER_ROOT_PASSWORD=password
-      - ALLOW_EMPTY_PASSWORD=yes
-
-  mysql-second-replica:
-    image: "bitnami/mysql:8.0"
-    depends_on:
-      mysql80-primary:
-        condition: service_healthy
-    networks:
-      williamdeslocal:
-        aliases:
-          - mysql-second-replica.williamdes.local
-          - mysql-second-replica
-          - mysql-second-replica.local
-    environment:
-      - MYSQL_REPLICATION_MODE=slave
-      - MYSQL_REPLICATION_USER=repl_user
-      - MYSQL_USER=sys
-      - MYSQL_DATABASE=system
-      - MYSQL_MASTER_HOST=mysql80-primary.williamdes.local
-      - MYSQL_MASTER_PORT_NUMBER=3306
-      - MYSQL_MASTER_ROOT_PASSWORD=password
-      - ALLOW_EMPTY_PASSWORD=yes
+          - 7.4-lowmem.williamdes.local
+          - pma.7.4-lowmem.local
+          - 7.4-lowmem.local
 
   mysql80:
     image: mysql:8.0
