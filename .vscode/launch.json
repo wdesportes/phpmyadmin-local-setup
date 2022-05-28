@@ -75,6 +75,20 @@
             "ignore": [
                 "**/vendor/**/*.php"
             ]
+        },
+		{
+            "name": "Listen for XDebug - deployer",
+            "type": "php",
+            "runtimeExecutable": "/bin/php",
+            "request": "launch",
+			"hostname": "0.0.0.0",
+            "log": true,
+            "ignore": [
+                "**/vendor/**/*.php"
+            ],
+			"pathMappings": {
+				"/home/www/phpMyAdmin/": "/mnt/Dev/@phpmyadmin/theREALphpMyAdminREPO"
+			}
         }
     ]
 }
