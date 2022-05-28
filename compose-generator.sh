@@ -13,6 +13,10 @@ function getMySQLVersions() {
 	jq -c -r '.mysql | .[]' compose-services.json
 }
 
+function getPerconaVersions() {
+	jq -c -r '.perconadb | .[]' compose-services.json
+}
+
 function getPHPFPMVersions() {
 	jq -c -r '.phpfpm | .[]' compose-services.json
 }
@@ -50,6 +54,8 @@ COMPOSE_SERVICES+=$(renderTemplate "FPM-slim")
 #COMPOSE_SERVICES+=$(renderTemplate "MySQL-replication")
 
 COMPOSE_SERVICES+=$(renderVersionBlock "MySQL" "$(getMySQLVersions)")
+
+COMPOSE_SERVICES+=$(renderVersionBlock "PerconaDB" "$(getPerconaVersions)")
 
 COMPOSE_SERVICES+=$(renderTemplate "DisabledContainers")
 renderTemplate "ComposeStructure" > docker-compose.yml

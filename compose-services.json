@@ -1,6 +1,10 @@
 {
 	"mariadb": [
 		{
+			"versionCode": 106,
+			"versionName": "10.6"
+		},
+		{
 			"versionCode": 105,
 			"versionName": "10.5"
 		},
@@ -9,10 +13,24 @@
 			"versionName": "10.2"
 		}
 	],
+	"perconadb": [
+		{
+			"versionCode": 5640,
+			"versionName": "5.6.40"
+		},
+		{
+			"versionCode": 5734,
+			"versionName": "5.7.34"
+		}
+	],
 	"mysql": [
 		{
 			"versionCode": 80,
 			"versionName": "8.0"
+		},
+		{
+			"versionCode": 801,
+			"versionName": "8.0.1"
 		},
 		{
 			"versionCode": 811,

@@ -1,0 +1,25 @@
+  perconadb${VERSION_INT}:
+    image: percona:${VERSION_STRING}
+    container_name: perconadb${VERSION_INT}
+    dns_search: williamdes.local
+    hostname: perconadb${VERSION_INT}.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
+    networks:
+      williamdeslocal:
+        aliases:
+          - perconadb${VERSION_INT}.williamdes.local
+    volumes:
+      - "/mnt/Dev/!OSS/servers/perconadb-server-${VERSION_INT}:/var/lib/mysql"
+    environment:
+      - INIT_TOKUDB=1
+      - INIT_ROCKSDB=1
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=public
+      - MYSQL_USER=public
+      - MYSQL_PASSWORD=public

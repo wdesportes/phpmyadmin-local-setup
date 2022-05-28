@@ -21,4 +21,5 @@
 !/public
 !/compose-templates
 servers/mariadb*-server/
+servers/perconadb-server*/
 servers/mysql-server*/
