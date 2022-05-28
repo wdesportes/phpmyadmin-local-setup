@@ -1,6 +1,14 @@
 {
 	"mariadb": [
 		{
+			"versionCode": 108,
+			"versionName": "10.8"
+		},
+		{
+			"versionCode": 107,
+			"versionName": "10.7"
+		},
+		{
 			"versionCode": 106,
 			"versionName": "10.6"
 		},
