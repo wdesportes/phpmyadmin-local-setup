@@ -38,6 +38,31 @@ services:
     ports:
       - "3306:3306"
 
+  mariadb106:
+    image: mariadb:10.6
+    container_name: mariadb106
+    dns_search: williamdes.local
+    hostname: mariadb106.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
+    networks:
+      williamdeslocal:
+        aliases:
+          - mariadb106.williamdes.local
+    volumes:
+      - "/mnt/Dev/!OSS/servers/mariadb106-server:/var/lib/mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=public
+      - MYSQL_USER=public
+      - MYSQL_PASSWORD=public
+
+
   mariadb105:
     image: mariadb:10.5
     container_name: mariadb105
@@ -440,6 +465,31 @@ services:
       - MYSQL_PASSWORD=public
 
 
+  mysql801:
+    image: mysql:8.0.1
+    container_name: mysql801
+    dns_search: williamdes.local
+    hostname: mysql801.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
+    networks:
+      williamdeslocal:
+        aliases:
+          - mysql801.williamdes.local
+    volumes:
+      - "/mnt/Dev/!OSS/servers/mysql-server-801:/var/lib/mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=public
+      - MYSQL_USER=public
+      - MYSQL_PASSWORD=public
+
+
   mysql811:
     image: mysql:8.0.11
     container_name: mysql811
@@ -609,6 +659,59 @@ services:
     volumes:
       - "/mnt/Dev/!OSS/servers/mysql-server-578:/var/lib/mysql"
     environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=public
+      - MYSQL_USER=public
+      - MYSQL_PASSWORD=public
+
+  perconadb5640:
+    image: percona:5.6.40
+    container_name: perconadb5640
+    dns_search: williamdes.local
+    hostname: perconadb5640.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
+    networks:
+      williamdeslocal:
+        aliases:
+          - perconadb5640.williamdes.local
+    volumes:
+      - "/mnt/Dev/!OSS/servers/perconadb-server-5640:/var/lib/mysql"
+    environment:
+      - INIT_TOKUDB=1
+      - INIT_ROCKSDB=1
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=public
+      - MYSQL_USER=public
+      - MYSQL_PASSWORD=public
+
+
+  perconadb5734:
+    image: percona:5.7.34
+    container_name: perconadb5734
+    dns_search: williamdes.local
+    hostname: perconadb5734.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
+    networks:
+      williamdeslocal:
+        aliases:
+          - perconadb5734.williamdes.local
+    volumes:
+      - "/mnt/Dev/!OSS/servers/perconadb-server-5734:/var/lib/mysql"
+    environment:
+      - INIT_TOKUDB=1
+      - INIT_ROCKSDB=1
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
       - MYSQL_USER=public
