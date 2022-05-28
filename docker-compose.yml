@@ -188,7 +188,7 @@ services:
       - "8443:8443"
 
   pmatest:
-    image: phpmyadmin/phpmyadmin:latest
+    image: phpmyadmin:latest
     container_name: pmatest
     dns_search: williamdes.local
     hostname: pmatest.williamdes.local
