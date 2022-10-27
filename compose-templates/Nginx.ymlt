@@ -21,9 +21,9 @@
           - 8.0.local
           - pma.selenium.local
     ports:
-      - "80:80"
-      - "443:443"
-      - "8443:8443"
+      - "${NGINX_HOST:-127.0.0.1}:80:80"
+      - "${NGINX_HOST:-127.0.0.1}:443:443"
+      - "${NGINX_HOST:-127.0.0.1}:8443:8443"
 
   pmatest:
     image: phpmyadmin:latest

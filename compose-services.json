@@ -71,12 +71,6 @@
 	],
 	"phpfpm": [
 		{
-			"versionCode": 53,
-			"versionName": "5.3",
-			"xdebugPort": 10053,
-			"containerImage": "devilbox/php-fpm-5.3:latest"
-		},
-		{
 			"versionCode": 55,
 			"versionName": "5.5",
 			"xdebugPort": 10055,
@@ -86,43 +80,49 @@
 			"versionCode": 70,
 			"versionName": "7.0",
 			"xdebugPort": 10070,
-			"containerImage": "devilbox/php-fpm:7.0-mods"
+			"containerImage": "webdevops/php-official:7.0"
 		},
 		{
 			"versionCode": 71,
 			"versionName": "7.1",
 			"xdebugPort": 10071,
-			"containerImage": "devilbox/php-fpm:7.1-mods"
+			"containerImage": "webdevops/php-dev:7.1-alpine"
 		},
 		{
 			"versionCode": 72,
 			"versionName": "7.2",
 			"xdebugPort": 10072,
-			"containerImage": "devilbox/php-fpm:7.2-mods"
+			"containerImage": "webdevops/php-dev:7.2-alpine"
 		},
 		{
 			"versionCode": 73,
 			"versionName": "7.3",
 			"xdebugPort": 10073,
-			"containerImage": "devilbox/php-fpm:7.3-mods"
+			"containerImage": "webdevops/php-dev:7.3-alpine"
 		},
 		{
 			"versionCode": 74,
 			"versionName": "7.4",
 			"xdebugPort": 10074,
-			"containerImage": "devilbox/php-fpm:7.4-work"
+			"containerImage": "webdevops/php-dev:7.4-alpine"
 		},
 		{
 			"versionCode": 80,
 			"versionName": "8.0",
 			"xdebugPort": 10080,
-			"containerImage": "devilbox/php-fpm:8.0-work"
+			"containerImage": "webdevops/php-dev:8.0-alpine"
 		},
 		{
 			"versionCode": 81,
 			"versionName": "8.1",
 			"xdebugPort": 10081,
-			"containerImage": "devilbox/php-fpm:8.1-work"
+			"containerImage": "webdevops/php-dev:8.1-alpine"
+		},
+		{
+			"versionCode": 82,
+			"versionName": "8.2",
+			"xdebugPort": 10082,
+			"containerImage": "webdevops/php-official:8.2"
 		}
 	]
 }

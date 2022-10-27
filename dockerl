@@ -1,12 +1,27 @@
-#!/bin/sh
+#!/bin/sh -eu
 
-ROOT="$(dirname $0)"
+ME=$(realpath $(dirname $0))
 
-if [ ! -f "$ROOT/servers/nginx/nginx-selfsigned.key" ]; then
+if [ ! -f $ME/.env ]; then
+    echo "Missing env: $ME/.env"
+    exit 1
+fi
+
+# Load up .env
+set -o allexport
+# Source the file
+. $ME/.env
+set +o allexport
+
+cd $ME
+
+printf 'Running in: %s\n' ${DOCKER_PROJECT_NAME}
+
+if [ ! -f "$ME/servers/nginx/nginx-selfsigned.key" ]; then
 	echo 'Missing nginx self cert'
-	openssl req -nodes -x509 -newkey rsa:4096 -keyout servers/nginx/nginx-selfsigned.key \
-    	-out servers/nginx/nginx-selfsigned.crt -days 365 \
+	openssl req -nodes -x509 -newkey rsa:4096 -keyout "$ME/servers/nginx/nginx-selfsigned.key" \
+    	-out "$ME/servers/nginx/nginx-selfsigned.crt" -days 365 \
     	-subj "/C=FR/O=Williamdes/OU=Testing/CN=*.local/CN=*.test/emailAddress=williamdes@wdes.fr"
 fi
 
-docker-compose -p local $@
+docker-compose -p ${DOCKER_PROJECT_NAME} $@

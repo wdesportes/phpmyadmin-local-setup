@@ -183,9 +183,9 @@ services:
           - 8.0.local
           - pma.selenium.local
     ports:
-      - "80:80"
-      - "443:443"
-      - "8443:8443"
+      - "${NGINX_HOST:-127.0.0.1}:80:80"
+      - "${NGINX_HOST:-127.0.0.1}:443:443"
+      - "${NGINX_HOST:-127.0.0.1}:8443:8443"
 
   pmatest:
     image: phpmyadmin:latest
@@ -205,33 +205,6 @@ services:
       - ./config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro
     ports:
       - "500:80"
-
-
-  phpfpm53:
-    image: devilbox/php-fpm-5.3:latest
-    container_name: phpfpm53
-    dns_search: williamdes.local
-    hostname: 5.3.williamdes.local
-    domainname: williamdes.local
-    restart: on-failure:2
-    mem_limit: 1g
-    working_dir: /mnt/Dev
-    environment:
-      PHP_EXTENSION_XDEBUG: ${PHP_EXTENSION_XDEBUG:-0}
-      PHP_INI_XDEBUG__REMOTE_PORT: 10053
-      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10053 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0}
-    volumes:
-      - "/dev/log:/dev/log"
-      - "/mnt/Dev:/mnt/Dev"
-      - "./servers/php-custom.d:/etc/php-custom.d"
-      - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
-    networks:
-      williamdeslocal:
-        aliases:
-          - 5.3.williamdes.local
-          - pma.5.3.local
-          - 5.3.local
-
 
 
   phpfpm55:
@@ -262,7 +235,7 @@ services:
 
 
   phpfpm70:
-    image: devilbox/php-fpm:7.0-mods
+    image: webdevops/php-official:7.0
     container_name: phpfpm70
     dns_search: williamdes.local
     hostname: 7.0.williamdes.local
@@ -289,7 +262,7 @@ services:
 
 
   phpfpm71:
-    image: devilbox/php-fpm:7.1-mods
+    image: webdevops/php-dev:7.1-alpine
     container_name: phpfpm71
     dns_search: williamdes.local
     hostname: 7.1.williamdes.local
@@ -316,7 +289,7 @@ services:
 
 
   phpfpm72:
-    image: devilbox/php-fpm:7.2-mods
+    image: webdevops/php-dev:7.2-alpine
     container_name: phpfpm72
     dns_search: williamdes.local
     hostname: 7.2.williamdes.local
@@ -343,7 +316,7 @@ services:
 
 
   phpfpm73:
-    image: devilbox/php-fpm:7.3-mods
+    image: webdevops/php-dev:7.3-alpine
     container_name: phpfpm73
     dns_search: williamdes.local
     hostname: 7.3.williamdes.local
@@ -370,7 +343,7 @@ services:
 
 
   phpfpm74:
-    image: devilbox/php-fpm:7.4-work
+    image: webdevops/php-dev:7.4-alpine
     container_name: phpfpm74
     dns_search: williamdes.local
     hostname: 7.4.williamdes.local
@@ -397,7 +370,7 @@ services:
 
 
   phpfpm80:
-    image: devilbox/php-fpm:8.0-work
+    image: webdevops/php-dev:8.0-alpine
     container_name: phpfpm80
     dns_search: williamdes.local
     hostname: 8.0.williamdes.local
@@ -424,7 +397,7 @@ services:
 
 
   phpfpm81:
-    image: devilbox/php-fpm:8.1-work
+    image: webdevops/php-dev:8.1-alpine
     container_name: phpfpm81
     dns_search: williamdes.local
     hostname: 8.1.williamdes.local
@@ -447,6 +420,33 @@ services:
           - 8.1.williamdes.local
           - pma.8.1.local
           - 8.1.local
+
+
+
+  phpfpm82:
+    image: webdevops/php-official:8.2
+    container_name: phpfpm82
+    dns_search: williamdes.local
+    hostname: 8.2.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    mem_limit: 1g
+    working_dir: /mnt/Dev
+    environment:
+      PHP_EXTENSION_XDEBUG: ${PHP_EXTENSION_XDEBUG:-0}
+      PHP_INI_XDEBUG__REMOTE_PORT: 10082
+      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=10082 remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0}
+    volumes:
+      - "/dev/log:/dev/log"
+      - "/mnt/Dev:/mnt/Dev"
+      - "./servers/php-custom.d:/etc/php-custom.d"
+      - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
+    networks:
+      williamdeslocal:
+        aliases:
+          - 8.2.williamdes.local
+          - pma.8.2.local
+          - 8.2.local
   haproxy:
     depends_on:
       - nginx-fpm-lowmem
