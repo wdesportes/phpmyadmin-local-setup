@@ -8,15 +8,18 @@
     restart: on-failure:2
     mem_limit: 1g
     working_dir: /mnt/Dev
+    # See: https://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/php-dev.html#environment-variables
     environment:
-      PHP_EXTENSION_XDEBUG: ${PHP_EXTENSION_XDEBUG:-0}
-      PHP_INI_XDEBUG__REMOTE_PORT: ${PHP_INI_XDEBUG__REMOTE_PORT}
-      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-remote_port=${PHP_INI_XDEBUG__REMOTE_PORT} remote_autostart=1 remote_host=172.19.0.1 remote_enable=1 remote_connect_back=0}
+      PHP_DISMOD: pdo_pgsql,shmop,soap,vips,xmlrpc,ioncube
+      PHP_UPLOAD_MAX_FILESIZE: 512M
+      PHP_POST_MAX_SIZE: 10M
+      PHP_DISPLAY_ERRORS: 1
+      XDEBUG_REMOTE_PORT: ${PHP_INI_XDEBUG__REMOTE_PORT}
+      WEB_DOCUMENT_ROOT: /mnt/Dev
     volumes:
-      - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
-      - "./servers/php-custom.d:/etc/php-custom.d"
-      - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
+      - "./servers/php-custom.d/williamdes.ini:/opt/docker/etc/php/php.custom.williamdes.ini:ro"
+      - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/:ro"
     networks:
       williamdeslocal:
         aliases:

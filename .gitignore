@@ -1,6 +1,7 @@
 /*
 /*.php
 !/\*.sql/
+!/.editorconfig
 !/docker-compose.yml
 !/docker-compose*.yml
 !/compose-services.json
