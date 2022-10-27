@@ -218,7 +218,7 @@ services:
     working_dir: /mnt/Dev
     # See: https://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/php-dev.html#environment-variables
     environment:
-      PHP_DISMOD: pdo_pgsql,shmop,soap,vips,xmlrpc,ioncube
+      PHP_DISMOD: pdo_pgsql,shmop,soap,vips,xmlrpc,ioncube,mongodb,spl,ftp,calendar,ldap,posix,redis,exif,amqp
       PHP_UPLOAD_MAX_FILESIZE: 512M
       PHP_POST_MAX_SIZE: 10M
       PHP_DISPLAY_ERRORS: 1
@@ -248,7 +248,7 @@ services:
     working_dir: /mnt/Dev
     # See: https://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/php-dev.html#environment-variables
     environment:
-      PHP_DISMOD: pdo_pgsql,shmop,soap,vips,xmlrpc,ioncube
+      PHP_DISMOD: pdo_pgsql,shmop,soap,vips,xmlrpc,ioncube,mongodb,spl,ftp,calendar,ldap,posix,redis,exif,amqp
       PHP_UPLOAD_MAX_FILESIZE: 512M
       PHP_POST_MAX_SIZE: 10M
       PHP_DISPLAY_ERRORS: 1
@@ -278,7 +278,7 @@ services:
     working_dir: /mnt/Dev
     # See: https://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/php-dev.html#environment-variables
     environment:
-      PHP_DISMOD: pdo_pgsql,shmop,soap,vips,xmlrpc,ioncube
+      PHP_DISMOD: pdo_pgsql,shmop,soap,vips,xmlrpc,ioncube,mongodb,spl,ftp,calendar,ldap,posix,redis,exif,amqp
       PHP_UPLOAD_MAX_FILESIZE: 512M
       PHP_POST_MAX_SIZE: 10M
       PHP_DISPLAY_ERRORS: 1
@@ -308,7 +308,7 @@ services:
     working_dir: /mnt/Dev
     # See: https://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/php-dev.html#environment-variables
     environment:
-      PHP_DISMOD: pdo_pgsql,shmop,soap,vips,xmlrpc,ioncube
+      PHP_DISMOD: pdo_pgsql,shmop,soap,vips,xmlrpc,ioncube,mongodb,spl,ftp,calendar,ldap,posix,redis,exif,amqp
       PHP_UPLOAD_MAX_FILESIZE: 512M
       PHP_POST_MAX_SIZE: 10M
       PHP_DISPLAY_ERRORS: 1
@@ -338,7 +338,7 @@ services:
     working_dir: /mnt/Dev
     # See: https://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/php-dev.html#environment-variables
     environment:
-      PHP_DISMOD: pdo_pgsql,shmop,soap,vips,xmlrpc,ioncube
+      PHP_DISMOD: pdo_pgsql,shmop,soap,vips,xmlrpc,ioncube,mongodb,spl,ftp,calendar,ldap,posix,redis,exif,amqp
       PHP_UPLOAD_MAX_FILESIZE: 512M
       PHP_POST_MAX_SIZE: 10M
       PHP_DISPLAY_ERRORS: 1
@@ -368,7 +368,7 @@ services:
     working_dir: /mnt/Dev
     # See: https://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/php-dev.html#environment-variables
     environment:
-      PHP_DISMOD: pdo_pgsql,shmop,soap,vips,xmlrpc,ioncube
+      PHP_DISMOD: pdo_pgsql,shmop,soap,vips,xmlrpc,ioncube,mongodb,spl,ftp,calendar,ldap,posix,redis,exif,amqp
       PHP_UPLOAD_MAX_FILESIZE: 512M
       PHP_POST_MAX_SIZE: 10M
       PHP_DISPLAY_ERRORS: 1
@@ -398,7 +398,7 @@ services:
     working_dir: /mnt/Dev
     # See: https://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/php-dev.html#environment-variables
     environment:
-      PHP_DISMOD: pdo_pgsql,shmop,soap,vips,xmlrpc,ioncube
+      PHP_DISMOD: pdo_pgsql,shmop,soap,vips,xmlrpc,ioncube,mongodb,spl,ftp,calendar,ldap,posix,redis,exif,amqp
       PHP_UPLOAD_MAX_FILESIZE: 512M
       PHP_POST_MAX_SIZE: 10M
       PHP_DISPLAY_ERRORS: 1
@@ -428,7 +428,7 @@ services:
     working_dir: /mnt/Dev
     # See: https://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/php-dev.html#environment-variables
     environment:
-      PHP_DISMOD: pdo_pgsql,shmop,soap,vips,xmlrpc,ioncube
+      PHP_DISMOD: pdo_pgsql,shmop,soap,vips,xmlrpc,ioncube,mongodb,spl,ftp,calendar,ldap,posix,redis,exif,amqp
       PHP_UPLOAD_MAX_FILESIZE: 512M
       PHP_POST_MAX_SIZE: 10M
       PHP_DISPLAY_ERRORS: 1
@@ -458,7 +458,7 @@ services:
     working_dir: /mnt/Dev
     # See: https://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/php-dev.html#environment-variables
     environment:
-      PHP_DISMOD: pdo_pgsql,shmop,soap,vips,xmlrpc,ioncube
+      PHP_DISMOD: pdo_pgsql,shmop,soap,vips,xmlrpc,ioncube,mongodb,spl,ftp,calendar,ldap,posix,redis,exif,amqp
       PHP_UPLOAD_MAX_FILESIZE: 512M
       PHP_POST_MAX_SIZE: 10M
       PHP_DISPLAY_ERRORS: 1
