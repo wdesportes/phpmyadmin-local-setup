@@ -15,7 +15,8 @@
         aliases:
           - mysql${VERSION_INT}.williamdes.local
     volumes:
-      - "/mnt/Dev/!OSS/servers/mysql-server-${VERSION_INT}:/var/lib/mysql"
+      - "${DB_STORAGE_DIR:-./db_data}/mysql-server-${VERSION_INT}:/var/lib/mysql"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/mysql${VERSION_INT}/:/run/mysqld/"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public

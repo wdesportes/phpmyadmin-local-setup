@@ -8,7 +8,7 @@
     restart: on-failure:2
     mem_limit: 100m
     volumes:
-      - "/mnt/Dev/!OSS/servers/nginx/:/etc/nginx"
+      - "${NGINX_CONF_DIR:-./servers}/nginx/:/etc/nginx"
       - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
       - "/var/log/containers/nginx:/var/log/nginx"

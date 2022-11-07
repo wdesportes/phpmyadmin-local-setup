@@ -75,7 +75,7 @@
   #    tmpfs:
   #      - /var/lib/haproxy:exec
   #    volumes:
-  #      - "/mnt/Dev/!OSS/servers/haproxy/:/usr/local/etc/haproxy"
+  #      - "./servers/haproxy/:/usr/local/etc/haproxy"
   #    networks:
   #      williamdeslocal:
   #        aliases:
@@ -95,7 +95,7 @@
   #    tmpfs:
   #      - /var/lib/varnish:exec
   #    volumes:
-  #      - "/mnt/Dev/!OSS/servers/varnish/:/etc/varnish"
+  #      - "./servers/varnish/:/etc/varnish"
   #    networks:
   #      williamdeslocal:
   #        aliases:

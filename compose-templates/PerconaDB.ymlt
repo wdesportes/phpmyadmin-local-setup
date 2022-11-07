@@ -15,7 +15,8 @@
         aliases:
           - perconadb${VERSION_INT}.williamdes.local
     volumes:
-      - "/mnt/Dev/!OSS/servers/perconadb-server-${VERSION_INT}:/var/lib/mysql"
+      - "${DB_STORAGE_DIR:-./db_data}/perconadb-server-${VERSION_INT}:/var/lib/mysql"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/perconadb${VERSION_INT}/:/run/mysqld/"
     environment:
       - INIT_TOKUDB=1
       - INIT_ROCKSDB=1

@@ -7,7 +7,7 @@
       timeout: 1s
       retries: 3
     volumes:
-      - "/mnt/Dev/!OSS/servers/mysql-server-80-primary-80-latest:/bitnami/mysql/data"
+      - "${DB_STORAGE_DIR:-./db_data}/mysql-server-80-primary-80-latest:/bitnami/mysql/data"
     networks:
       williamdeslocal:
         aliases:

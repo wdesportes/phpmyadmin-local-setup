@@ -27,9 +27,10 @@ services:
         aliases:
           - mariadb104.williamdes.local
     volumes:
-      - "/mnt/Dev/!OSS/servers/mariadb104-rocks-server:/var/lib/mysql"
+      - "${DB_STORAGE_DIR:-./db_data}/mariadb104-rocks-server:/var/lib/mysql"
       - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
       - "/mnt/Dev/!OSS/public/mysqld.cnf:/etc/mysql/mariadb.conf.d/ssl.cnf"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/mariadb104-rocks/:/run/mysqld/"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
@@ -55,7 +56,8 @@ services:
         aliases:
           - mariadb108.williamdes.local
     volumes:
-      - "/mnt/Dev/!OSS/servers/mariadb108-server:/var/lib/mysql"
+      - "${DB_STORAGE_DIR:-./db_data}/mariadb108-server:/var/lib/mysql"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/mariadb108/:/run/mysqld/"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
@@ -80,7 +82,8 @@ services:
         aliases:
           - mariadb107.williamdes.local
     volumes:
-      - "/mnt/Dev/!OSS/servers/mariadb107-server:/var/lib/mysql"
+      - "${DB_STORAGE_DIR:-./db_data}/mariadb107-server:/var/lib/mysql"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/mariadb107/:/run/mysqld/"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
@@ -105,7 +108,8 @@ services:
         aliases:
           - mariadb106.williamdes.local
     volumes:
-      - "/mnt/Dev/!OSS/servers/mariadb106-server:/var/lib/mysql"
+      - "${DB_STORAGE_DIR:-./db_data}/mariadb106-server:/var/lib/mysql"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/mariadb106/:/run/mysqld/"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
@@ -130,7 +134,8 @@ services:
         aliases:
           - mariadb105.williamdes.local
     volumes:
-      - "/mnt/Dev/!OSS/servers/mariadb105-server:/var/lib/mysql"
+      - "${DB_STORAGE_DIR:-./db_data}/mariadb105-server:/var/lib/mysql"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/mariadb105/:/run/mysqld/"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
@@ -155,7 +160,8 @@ services:
         aliases:
           - mariadb102.williamdes.local
     volumes:
-      - "/mnt/Dev/!OSS/servers/mariadb102-server:/var/lib/mysql"
+      - "${DB_STORAGE_DIR:-./db_data}/mariadb102-server:/var/lib/mysql"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/mariadb102/:/run/mysqld/"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
@@ -170,7 +176,7 @@ services:
     restart: on-failure:2
     mem_limit: 100m
     volumes:
-      - "/mnt/Dev/!OSS/servers/nginx/:/etc/nginx"
+      - "${NGINX_CONF_DIR:-./servers}/nginx/:/etc/nginx"
       - "/dev/log:/dev/log"
       - "/mnt/Dev:/mnt/Dev"
       - "/var/log/containers/nginx:/var/log/nginx"
@@ -534,7 +540,8 @@ services:
         aliases:
           - mysql80.williamdes.local
     volumes:
-      - "/mnt/Dev/!OSS/servers/mysql-server-80:/var/lib/mysql"
+      - "${DB_STORAGE_DIR:-./db_data}/mysql-server-80:/var/lib/mysql"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/mysql80/:/run/mysqld/"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
@@ -559,7 +566,8 @@ services:
         aliases:
           - mysql801.williamdes.local
     volumes:
-      - "/mnt/Dev/!OSS/servers/mysql-server-801:/var/lib/mysql"
+      - "${DB_STORAGE_DIR:-./db_data}/mysql-server-801:/var/lib/mysql"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/mysql801/:/run/mysqld/"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
@@ -584,7 +592,8 @@ services:
         aliases:
           - mysql811.williamdes.local
     volumes:
-      - "/mnt/Dev/!OSS/servers/mysql-server-811:/var/lib/mysql"
+      - "${DB_STORAGE_DIR:-./db_data}/mysql-server-811:/var/lib/mysql"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/mysql811/:/run/mysqld/"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
@@ -609,7 +618,8 @@ services:
         aliases:
           - mysql803.williamdes.local
     volumes:
-      - "/mnt/Dev/!OSS/servers/mysql-server-803:/var/lib/mysql"
+      - "${DB_STORAGE_DIR:-./db_data}/mysql-server-803:/var/lib/mysql"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/mysql803/:/run/mysqld/"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
@@ -634,7 +644,8 @@ services:
         aliases:
           - mysql57.williamdes.local
     volumes:
-      - "/mnt/Dev/!OSS/servers/mysql-server-57:/var/lib/mysql"
+      - "${DB_STORAGE_DIR:-./db_data}/mysql-server-57:/var/lib/mysql"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/mysql57/:/run/mysqld/"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
@@ -659,7 +670,8 @@ services:
         aliases:
           - mysql5726.williamdes.local
     volumes:
-      - "/mnt/Dev/!OSS/servers/mysql-server-5726:/var/lib/mysql"
+      - "${DB_STORAGE_DIR:-./db_data}/mysql-server-5726:/var/lib/mysql"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/mysql5726/:/run/mysqld/"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
@@ -684,7 +696,8 @@ services:
         aliases:
           - mysql5717.williamdes.local
     volumes:
-      - "/mnt/Dev/!OSS/servers/mysql-server-5717:/var/lib/mysql"
+      - "${DB_STORAGE_DIR:-./db_data}/mysql-server-5717:/var/lib/mysql"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/mysql5717/:/run/mysqld/"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
@@ -709,7 +722,8 @@ services:
         aliases:
           - mysql5722.williamdes.local
     volumes:
-      - "/mnt/Dev/!OSS/servers/mysql-server-5722:/var/lib/mysql"
+      - "${DB_STORAGE_DIR:-./db_data}/mysql-server-5722:/var/lib/mysql"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/mysql5722/:/run/mysqld/"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
@@ -734,7 +748,8 @@ services:
         aliases:
           - mysql578.williamdes.local
     volumes:
-      - "/mnt/Dev/!OSS/servers/mysql-server-578:/var/lib/mysql"
+      - "${DB_STORAGE_DIR:-./db_data}/mysql-server-578:/var/lib/mysql"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/mysql578/:/run/mysqld/"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
@@ -758,7 +773,8 @@ services:
         aliases:
           - perconadb5640.williamdes.local
     volumes:
-      - "/mnt/Dev/!OSS/servers/perconadb-server-5640:/var/lib/mysql"
+      - "${DB_STORAGE_DIR:-./db_data}/perconadb-server-5640:/var/lib/mysql"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/perconadb5640/:/run/mysqld/"
     environment:
       - INIT_TOKUDB=1
       - INIT_ROCKSDB=1
@@ -785,7 +801,8 @@ services:
         aliases:
           - perconadb5734.williamdes.local
     volumes:
-      - "/mnt/Dev/!OSS/servers/perconadb-server-5734:/var/lib/mysql"
+      - "${DB_STORAGE_DIR:-./db_data}/perconadb-server-5734:/var/lib/mysql"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/perconadb5734/:/run/mysqld/"
     environment:
       - INIT_TOKUDB=1
       - INIT_ROCKSDB=1
@@ -869,7 +886,7 @@ services:
   #    tmpfs:
   #      - /var/lib/haproxy:exec
   #    volumes:
-  #      - "/mnt/Dev/!OSS/servers/haproxy/:/usr/local/etc/haproxy"
+  #      - "./servers/haproxy/:/usr/local/etc/haproxy"
   #    networks:
   #      williamdeslocal:
   #        aliases:
@@ -889,7 +906,7 @@ services:
   #    tmpfs:
   #      - /var/lib/varnish:exec
   #    volumes:
-  #      - "/mnt/Dev/!OSS/servers/varnish/:/etc/varnish"
+  #      - "./servers/varnish/:/etc/varnish"
   #    networks:
   #      williamdeslocal:
   #        aliases:

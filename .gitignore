@@ -2,6 +2,7 @@
 /*.php
 !/\*.sql/
 !/.editorconfig
+!/.env.dist
 !/docker-compose.yml
 !/docker-compose*.yml
 !/compose-services.json

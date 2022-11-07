@@ -15,9 +15,10 @@
         aliases:
           - mariadb${VERSION_INT}.williamdes.local
     volumes:
-      - "/mnt/Dev/!OSS/servers/mariadb${VERSION_INT}-rocks-server:/var/lib/mysql"
+      - "${DB_STORAGE_DIR:-./db_data}/mariadb${VERSION_INT}-rocks-server:/var/lib/mysql"
       - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/"
       - "/mnt/Dev/!OSS/public/mysqld.cnf:/etc/mysql/mariadb.conf.d/ssl.cnf"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/mariadb${VERSION_INT}-rocks/:/run/mysqld/"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
