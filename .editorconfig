@@ -9,3 +9,6 @@ insert_final_newline = true
 
 [compose-templates/*.ymlt]
 indent_style = space
+
+[*.yml]
+indent_style = space

@@ -25,4 +25,4 @@
       - MYSQL_USER=public
       - MYSQL_PASSWORD=public
     ports:
-      - "3306:3306"
+      - "127.0.0.12:3306:3306"

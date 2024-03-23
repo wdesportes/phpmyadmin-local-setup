@@ -25,21 +25,56 @@
       - "${NGINX_HOST:-127.0.0.1}:443:443"
       - "${NGINX_HOST:-127.0.0.1}:8443:8443"
 
-  pmatest:
-    image: phpmyadmin:latest
-    container_name: pmatest
+  pmatest-6.0:
+    image: botsudo/phpmyadmin-snapshots:6.0-snapshot
+    container_name: pmatest-6.0
     dns_search: williamdes.local
-    hostname: pmatest.williamdes.local
+    hostname: pmatest-6.0.williamdes.local
     domainname: williamdes.local
     restart: on-failure:2
     mem_limit: 100m
     networks:
       williamdeslocal:
-        aliases:
-          - pmatest.williamdes.local
     environment:
         UPLOAD_LIMIT: 2G
+        MEMORY_LIMIT: 90m
     volumes:
       - ./config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro
     ports:
-      - "500:80"
+      - "${SNAPSHOT_HOST_53:-127.0.0.15}:80:80"
+    labels:
+      com.centurylinklabs.watchtower.enable: true
+
+  pmatest-5.2:
+    image: botsudo/phpmyadmin-snapshots:5.2-snapshot
+    container_name: pmatest-5.2
+    dns_search: williamdes.local
+    hostname: pmatest-5.2.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    mem_limit: 100m
+    networks:
+      williamdeslocal:
+    environment:
+        UPLOAD_LIMIT: 2G
+        MEMORY_LIMIT: 90m
+    volumes:
+      - ./config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro
+    ports:
+      - "${SNAPSHOT_HOST_52:-127.0.0.14}:80:80"
+    labels:
+      com.centurylinklabs.watchtower.enable: true
+
+  watchtower:
+    image: containrrr/watchtower
+    environment:
+        # Only containers with the label: com.centurylinklabs.watchtower.enable
+        WATCHTOWER_LABEL_ENABLE: true
+        # Remove the old container: https://containrrr.dev/watchtower/arguments/#cleanup
+        WATCHTOWER_CLEANUP: true
+        # Also restart the container
+        WATCHTOWER_INCLUDE_RESTARTING: true
+        # Poll interval in seconds: https://containrrr.dev/watchtower/arguments/#poll_interval
+        WATCHTOWER_POLL_INTERVAL: 3600
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
