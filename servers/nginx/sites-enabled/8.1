@@ -26,6 +26,11 @@ server {
 	location ~ \.php$ {
 		include snippets/fastcgi-php.conf;
 		fastcgi_param PHP_ADMIN_VALUE "open_basedir=$document_root:/tmp";
+		fastcgi_param PHP_ADMIN_VALUE "doc_root=/mnt/Dev/";
+		fastcgi_param PHP_ADMIN_VALUE "error_log=/dev/stderr";
+		fastcgi_param PHP_ADMIN_VALUE "error_reporting=E_ALL";
+		fastcgi_param PHP_ADMIN_VALUE "log_errors=on";
+		fastcgi_param PHP_ADMIN_VALUE "display_errors=on";
 		fastcgi_pass $socket;
 	}
 }
