@@ -1,6 +1,10 @@
 {
 	"mariadb": [
 		{
+			"versionCode": 1010,
+			"versionName": "10.10"
+		},
+		{
 			"versionCode": 108,
 			"versionName": "10.8"
 		},
@@ -67,6 +71,18 @@
 		{
 			"versionCode": 578,
 			"versionName": "5.7.8"
+		},
+		{
+			"versionCode": 575,
+			"versionName": "5.7.5"
+		},
+		{
+			"versionCode": 576,
+			"versionName": "5.7.6"
+		},
+		{
+			"versionCode": 5562,
+			"versionName": "5.5.62"
 		}
 	],
 	"phpfpm": [
@@ -123,6 +139,12 @@
 			"versionName": "8.2",
 			"xdebugPort": 10082,
 			"containerImage": "webdevops/php-official:8.2"
+		},
+		{
+			"versionCode": 83,
+			"versionName": "8.3",
+			"xdebugPort": 10083,
+			"containerImage": "webdevops/php-official:8.3"
 		}
 	]
 }

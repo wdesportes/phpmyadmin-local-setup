@@ -37,7 +37,33 @@ services:
       - MYSQL_USER=public
       - MYSQL_PASSWORD=public
     ports:
-      - "3306:3306"
+      - "127.0.0.12:3306:3306"
+
+  mariadb1010:
+    image: mariadb:10.10
+    container_name: mariadb1010
+    dns_search: williamdes.local
+    hostname: mariadb1010.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
+    networks:
+      williamdeslocal:
+        aliases:
+          - mariadb1010.williamdes.local
+    volumes:
+      - "${DB_STORAGE_DIR:-./db_data}/mariadb1010-server:/var/lib/mysql"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/mariadb1010/:/run/mysqld/"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=public
+      - MYSQL_USER=public
+      - MYSQL_PASSWORD=public
+
 
   mariadb108:
     image: mariadb:10.8
@@ -193,24 +219,59 @@ services:
       - "${NGINX_HOST:-127.0.0.1}:443:443"
       - "${NGINX_HOST:-127.0.0.1}:8443:8443"
 
-  pmatest:
-    image: phpmyadmin:latest
-    container_name: pmatest
+  pmatest-6.0:
+    image: botsudo/phpmyadmin-snapshots:6.0-snapshot
+    container_name: pmatest-6.0
     dns_search: williamdes.local
-    hostname: pmatest.williamdes.local
+    hostname: pmatest-6.0.williamdes.local
     domainname: williamdes.local
     restart: on-failure:2
     mem_limit: 100m
     networks:
       williamdeslocal:
-        aliases:
-          - pmatest.williamdes.local
     environment:
         UPLOAD_LIMIT: 2G
+        MEMORY_LIMIT: 90m
     volumes:
       - ./config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro
     ports:
-      - "500:80"
+      - "${SNAPSHOT_HOST_53:-127.0.0.15}:80:80"
+    labels:
+      com.centurylinklabs.watchtower.enable: true
+
+  pmatest-5.2:
+    image: botsudo/phpmyadmin-snapshots:5.2-snapshot
+    container_name: pmatest-5.2
+    dns_search: williamdes.local
+    hostname: pmatest-5.2.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    mem_limit: 100m
+    networks:
+      williamdeslocal:
+    environment:
+        UPLOAD_LIMIT: 2G
+        MEMORY_LIMIT: 90m
+    volumes:
+      - ./config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro
+    ports:
+      - "${SNAPSHOT_HOST_52:-127.0.0.14}:80:80"
+    labels:
+      com.centurylinklabs.watchtower.enable: true
+
+  watchtower:
+    image: containrrr/watchtower
+    environment:
+        # Only containers with the label: com.centurylinklabs.watchtower.enable
+        WATCHTOWER_LABEL_ENABLE: true
+        # Remove the old container: https://containrrr.dev/watchtower/arguments/#cleanup
+        WATCHTOWER_CLEANUP: true
+        # Also restart the container
+        WATCHTOWER_INCLUDE_RESTARTING: true
+        # Poll interval in seconds: https://containrrr.dev/watchtower/arguments/#poll_interval
+        WATCHTOWER_POLL_INTERVAL: 3600
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
 
   phpfpm55:
@@ -480,6 +541,36 @@ services:
           - 8.2.williamdes.local
           - pma.8.2.local
           - 8.2.local
+
+
+
+  phpfpm83:
+    image: webdevops/php-official:8.3
+    container_name: phpfpm83
+    dns_search: williamdes.local
+    hostname: 8.3.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    mem_limit: 1g
+    working_dir: /mnt/Dev
+    # See: https://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/php-dev.html#environment-variables
+    environment:
+      PHP_DISMOD: pdo_pgsql,shmop,soap,vips,xmlrpc,ioncube,mongodb,spl,ftp,calendar,ldap,posix,redis,exif,amqp
+      PHP_UPLOAD_MAX_FILESIZE: 512M
+      PHP_POST_MAX_SIZE: 10M
+      PHP_DISPLAY_ERRORS: 1
+      XDEBUG_REMOTE_PORT: 10083
+      WEB_DOCUMENT_ROOT: /mnt/Dev
+    volumes:
+      - "/mnt/Dev:/mnt/Dev"
+      - "./servers/php-custom.d/williamdes.ini:/opt/docker/etc/php/php.custom.williamdes.ini:ro"
+      - "/mnt/Dev/!OSS/public/ssl/:/etc/db-certs/:ro"
+    networks:
+      williamdeslocal:
+        aliases:
+          - 8.3.williamdes.local
+          - pma.8.3.local
+          - 8.3.local
   haproxy:
     depends_on:
       - nginx-fpm-lowmem
@@ -750,6 +841,84 @@ services:
     volumes:
       - "${DB_STORAGE_DIR:-./db_data}/mysql-server-578:/var/lib/mysql"
       - "${DB_SOCKETS_DIR:-./db-server-sockets}/mysql578/:/run/mysqld/"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=public
+      - MYSQL_USER=public
+      - MYSQL_PASSWORD=public
+
+
+  mysql575:
+    image: mysql:5.7.5
+    container_name: mysql575
+    dns_search: williamdes.local
+    hostname: mysql575.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
+    networks:
+      williamdeslocal:
+        aliases:
+          - mysql575.williamdes.local
+    volumes:
+      - "${DB_STORAGE_DIR:-./db_data}/mysql-server-575:/var/lib/mysql"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/mysql575/:/run/mysqld/"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=public
+      - MYSQL_USER=public
+      - MYSQL_PASSWORD=public
+
+
+  mysql576:
+    image: mysql:5.7.6
+    container_name: mysql576
+    dns_search: williamdes.local
+    hostname: mysql576.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
+    networks:
+      williamdeslocal:
+        aliases:
+          - mysql576.williamdes.local
+    volumes:
+      - "${DB_STORAGE_DIR:-./db_data}/mysql-server-576:/var/lib/mysql"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/mysql576/:/run/mysqld/"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=public
+      - MYSQL_USER=public
+      - MYSQL_PASSWORD=public
+
+
+  mysql5562:
+    image: mysql:5.5.62
+    container_name: mysql5562
+    dns_search: williamdes.local
+    hostname: mysql5562.williamdes.local
+    domainname: williamdes.local
+    restart: on-failure:2
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+      interval: 120s
+      timeout: 1s
+      retries: 3
+    networks:
+      williamdeslocal:
+        aliases:
+          - mysql5562.williamdes.local
+    volumes:
+      - "${DB_STORAGE_DIR:-./db_data}/mysql-server-5562:/var/lib/mysql"
+      - "${DB_SOCKETS_DIR:-./db-server-sockets}/mysql5562/:/run/mysqld/"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=public
