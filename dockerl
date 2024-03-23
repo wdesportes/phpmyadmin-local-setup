@@ -24,4 +24,4 @@ if [ ! -f "$ME/servers/nginx/nginx-selfsigned.key" ]; then
     	-subj "/C=FR/O=Williamdes/OU=Testing/CN=*.local/CN=*.test/emailAddress=williamdes@wdes.fr"
 fi
 
-docker-compose -p ${DOCKER_PROJECT_NAME} $@
+docker compose -p ${DOCKER_PROJECT_NAME} $@
